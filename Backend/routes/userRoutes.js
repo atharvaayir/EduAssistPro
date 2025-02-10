@@ -7,5 +7,5 @@ router.post('/login',loginUser);
 
 router.post('/register',registerUser);
 
-router.post('/current',validateToken,currentUser);
+router.post('/homepage',validateToken,currentUser);
 module.exports=router;

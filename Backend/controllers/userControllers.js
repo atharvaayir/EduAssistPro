@@ -61,7 +61,7 @@ const loginUser=asyncHandler(async(req,res)=>{
                 email:user.emailid,
                 id:user.id
             }
-        },process.env.ACCESS_TOKEN_KEY,
+        },process.env.ACCESS_TOKEN_SECRET,
         {expiresIn:"10m"}
         );
         res.status(200).json({accessToken});
@@ -72,7 +72,7 @@ const loginUser=asyncHandler(async(req,res)=>{
         }
 });
 const currentUser = asyncHandler(async (req, res) => {
-    console.log("heo");    
+    //console.log("heo");    
     res.json(req.user);
 });
 
