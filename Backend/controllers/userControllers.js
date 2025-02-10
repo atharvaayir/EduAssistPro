@@ -47,6 +47,8 @@ const registerUser= asyncHandler(async (req,res)=>{
 //@access public
 //used to handle async errors, no need to write try catch in every async function
 const loginUser=asyncHandler(async(req,res)=>{
+    console.log(req.headers);
+    console.log(req.body);
         const {username,password}=req.body;
         if(!username || !password){
             res.status(400);
