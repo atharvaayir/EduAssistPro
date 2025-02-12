@@ -1,4 +1,5 @@
 const express=require('express');
+const cors=require('cors');
 const app=express();
 const dotenv=require('dotenv').config();
 const PORT=process.env.PORT || 8000;
@@ -7,8 +8,23 @@ const errorHandler=require('./middlewares/errorHandler');
 const urlbp=require('body-parser');
 
 //Connection with the db
+
+
+
 connectDb();
+
+// app.use(cors({
+//     origin: 'http://localhost:3000',
+//     credentials: true, // Allow cookies and authentication headers
+// }));
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true, // Allow cookies and authentication headers
+}));
+
+
 // to read data from the body of url-encoded type
+
 app.use(urlbp.urlencoded({extended:true}));
 //to read data from the body of json type
 app.use(express.json());
