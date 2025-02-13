@@ -1,4 +1,3 @@
-// src/App.jsx
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard"; // This is your dashboard view (Navbar, Sidebar, MainContent, etc.)
 import CreateClassroomObject from "./pages/CreateClassroomObject";
@@ -8,6 +7,7 @@ import Login from "./pages/Login";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [username,setUsername]=useState("Guest");
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -15,7 +15,8 @@ const App = () => {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("accessKey")}`;
       try {
-        await axios.post("http://127.0.0.1:8000/api/users/homepage");
+        const res=await axios.post("http://127.0.0.1:8000/api/users/homepage");
+        setUsername(res.data.username);
         setIsAuthenticated(true);
       } catch {
         setIsAuthenticated(false);
@@ -30,7 +31,7 @@ const App = () => {
   }
   return (
     <Routes>
-      <Route index element={isAuthenticated ? <Dashboard /> : <Login />} />
+      <Route index element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Login />} />
     </Routes>
   );
 };
