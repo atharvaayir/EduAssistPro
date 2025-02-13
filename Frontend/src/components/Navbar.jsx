@@ -1,5 +1,11 @@
+// src/components/Navbar.js
+import React from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
-function Navbar({ adminName,setIsAuthenticated }) {
+function LogOut(){
+  localStorage.removeItem('accessKey');
+  location.reload();
+}
+function Navbar({ adminName }) {
   return (
     <nav className="bg-blue-600 text-white px-4 py-3 flex items-center justify-between">
       {/* Left: Logo */}
@@ -9,11 +15,11 @@ function Navbar({ adminName,setIsAuthenticated }) {
 
       {/* Center: Admin Name */}
       <div className="text-xl font-medium">
-        Welcome, {adminName} <span style={{fontSize:"25px"}}>📕</span>
+        {adminName}
       </div>
 
       {/* Right: Logout Button */}
-      <button className="flex items-center bg-blue-700 hover:bg-blue-800 px-3 py-2 rounded focus:outline-none" onClick={()=>{setIsAuthenticated(false)}}>
+      <button className="flex items-center bg-blue-700 hover:bg-blue-800 px-3 py-2 rounded focus:outline-none" onClick={LogOut}>
         <FaSignOutAlt className="mr-2" /> Logout
       </button>
     </nav>

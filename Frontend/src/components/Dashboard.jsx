@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useRef } from 'react';
 
-const Dashboard = ({username,setIsAuthenticated}) => {
+const Dashboard = () => {
   const toastShown = useRef(false); // Keeps track of whether the toast has been shown
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Dashboard = ({username,setIsAuthenticated}) => {
     <Toaster/>
     <div className="flex flex-col h-screen">
       {/* Top Navigation Bar */}
-      <Navbar adminName={username} setIsAuthenticated={setIsAuthenticated} />
+      <Navbar adminName="Admin Name" />
 
       {/* Main Dashboard Area */}
       <div className="flex flex-1 overflow-hidden">
