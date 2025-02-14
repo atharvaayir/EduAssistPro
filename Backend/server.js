@@ -9,10 +9,7 @@ const urlbp=require('body-parser');
 
 //Connection with the db
 
-
-
 connectDb();
-
 // app.use(cors({
 //     origin: 'http://localhost:3000',
 //     credentials: true, // Allow cookies and authentication headers
