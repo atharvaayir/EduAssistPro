@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/Dashboard"; // This is your dashboard view (Navbar, Sidebar, MainContent, etc.)
-import CreateClassroomObject from "./pages/CreateClassroomObject";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
+import CreateClassroomObject from "./pages/CreateClassroomObject";
+import ClassroomObjects from "./pages/ClassroomObjects";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -33,6 +34,7 @@ const App = () => {
   return (
     <Routes>
       <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Login />} />
+      <Route exact path="/classroom-object" element={isAuthenticated ? <ClassroomObjects/>: <ErrorPage/> }/>
       <Route exact path="/create-classroom-object" element={isAuthenticated ? <CreateClassroomObject/>: <ErrorPage/> }/>
       <Route path="*" element={<ErrorPage/>}/>
     </Routes>

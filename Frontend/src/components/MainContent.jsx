@@ -23,7 +23,7 @@ function MainContent() {
           Student Data
         </button>
         <Link 
-        to="/create-classroom-object"
+        to="/classroom-object"
         className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
       >
         <button className="">
