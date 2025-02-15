@@ -25,7 +25,7 @@ const registerUser= asyncHandler(async (req,res)=>{
         throw new Error("The username already exists");
     }
     const hashedPassword=await bycrypt.hash(password,10);
-    console.log(hashedPassword); 
+    console.log(hashedPassword);
     
 
     const user =await User.insertOne({
@@ -47,7 +47,7 @@ const registerUser= asyncHandler(async (req,res)=>{
 //@access public
 //used to handle async errors, no need to write try catch in every async function
 const loginUser=asyncHandler(async(req,res)=>{
-    console.log(req.headers);
+    // console.log(req.headers);
     console.log(req.body);
         const {username,password}=req.body;
         if(!username || !password){
@@ -55,8 +55,8 @@ const loginUser=asyncHandler(async(req,res)=>{
             throw new Error("All fields are mandatory");
         }
         const user= await User.findOne({username});
-
         if(user && (await bycrypt.compare(password,user.password))){
+            console.log("user found");
            const accessToken=jwt.sign({
             user:{
                 username:user.username,
@@ -69,6 +69,7 @@ const loginUser=asyncHandler(async(req,res)=>{
         res.status(200).json({accessToken});
         }
         else{
+            console.log("user found");
             res.status(401);
             throw new Error("username or password is not valid");
         }

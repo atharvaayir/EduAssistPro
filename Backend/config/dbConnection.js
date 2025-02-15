@@ -1,7 +1,7 @@
 const mongoose=require('mongoose');
 const connectDb=async ()=>{
     try{
-        const connect=await mongoose.connect('mongodb://127.0.0.1:27017/EduAssistPro');
+        const connect=await mongoose.connect(process.env.MONGODB_URL);
         console.log("Connection with DB Successful");
     }
     catch(err){

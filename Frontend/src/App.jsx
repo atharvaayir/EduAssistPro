@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./components/Dashboard"; // This is your dashboard view (Navbar, Sidebar, MainContent, etc.)
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,7 +17,7 @@ const App = () => {
         "Authorization"
       ] = `Bearer ${localStorage.getItem("accessKey")}`;
       try {
-        const res=await axios.post("http://127.0.0.1:8000/api/users/homepage");
+        const res=await axios.post("http://localhost:8000/api/users/homepage");
         setUsername(res.data.username);
         setIsAuthenticated(true);
       } catch {
@@ -33,7 +33,8 @@ const App = () => {
   }
   return (
     <Routes>
-      <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Login />} />
+      <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username}/>: <Login/> }/>
+      <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login" />} />
       <Route exact path="/classroom-object" element={isAuthenticated ? <ClassroomObjects/>: <ErrorPage/> }/>
       <Route exact path="/create-classroom-object" element={isAuthenticated ? <CreateClassroomObject/>: <ErrorPage/> }/>
       <Route path="*" element={<ErrorPage/>}/>
