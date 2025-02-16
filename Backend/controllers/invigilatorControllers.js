@@ -1,9 +1,7 @@
-const Invigilator=require('../models/invigilatorModel');
+const Invigilator = require("../models/invigilatorModel");
 
 Invigilator.insertOne({
-    name:"atharva",
-    email:"atharvaauir@gmald.com",
-    password:"atharva"
-    
-
+  name: "atharva",
+  email: "atharvaauir@gmald.com",
+  password: "atharva",
 });
