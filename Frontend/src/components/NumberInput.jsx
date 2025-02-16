@@ -29,10 +29,10 @@ const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, onChan
     };
 
     return (
-        <div clas   sName="flex items-center rounded-md w-28">
+        <div className="flex items-center rounded-md w-28 mx-auto">
             <button 
                 onClick={handleDecrement} 
-                className="btn btn-sm bg-neutral-300 px-2"
+                className="btn btn-sm hover:bg-neutral-500 rounded-none border-2  border-neutral-400 rounded-l-lg bg-neutral-400 px-2"
                 disabled={number <= min}
             >
                 <Minus size={16} />
@@ -40,7 +40,7 @@ const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, onChan
             <input
                 type="text"
                 ref={ref}
-                className="text-center w-full border-none outline-none bg-transparent"
+                className="text-center h-8 border-neutral-400 border-y-2  w-full outline-none bg-transparent"
                 value={number}
                 onChange={handleChange}
                 min={min}
@@ -50,7 +50,7 @@ const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, onChan
             />
             <button 
                 onClick={handleIncrement} 
-                className="btn btn-sm bg-neutral-300 px-2"
+                className="btn btn-sm hover:bg-neutral-500 rounded-none border-2 border-neutral-400 rounded-r-lg bg-neutral-400 px-2"
                 disabled={number >= max}
             >
                 <Plus size={16} />

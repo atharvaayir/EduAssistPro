@@ -1,21 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import PageHeader from "../components/PageHeader";
-import { Pencil, Trash, Plus, X } from "lucide-react";
+import { Trash, Plus, X } from "lucide-react";
 import NumberInput from "../components/NumberInput";
+import { useClassroomStore } from "../store/useClassroomStore";
 
 const obj = [
-  {
-    rows: 3,
-    columns: 10,
-    benchCapacity: 2,
-    classCount: 5,
-  },
-  {
-    rows: 8,
-    columns: 10,
-    benchCapacity: 2,
-    classCount: 5,
-  },
+
 ];
 
 const CreateClassroomObjects = () => {

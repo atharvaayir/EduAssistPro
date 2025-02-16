@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
-import CreateClassroomObject from "./pages/CreateClassroomObject";
+import CreateClassroom from "./pages/CreateClassroom";
 import ClassroomObjects from "./pages/ClassroomObjects";
+import { Toaster } from "react-hot-toast";
+import UpdateClassroom from "./pages/UpdateClassroom";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -32,13 +34,19 @@ const App = () => {
     return <div>Loading...</div>; // Show loading state while checking authentication
   }
   return (
-    <Routes>
-      <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username}/>: <Login/> }/>
-      <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login" />} />
-      <Route exact path="/classroom-object" element={isAuthenticated ? <ClassroomObjects/>: <ErrorPage/> }/>
-      <Route exact path="/create-classroom-object" element={isAuthenticated ? <CreateClassroomObject/>: <ErrorPage/> }/>
-      <Route path="*" element={<ErrorPage/>}/>
-    </Routes>
+    <>
+      <Routes>
+        <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username}/>: <Login/> }/>
+        <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login" />} />
+
+        {/* classroom routes */}
+        <Route exact path="/classrooms" element={<ClassroomObjects/> }/>
+        <Route exact path="/create-classroom" element={<CreateClassroom/> }/>
+        <Route exact path="/update-classroom" element={<UpdateClassroom/> }/>
+        <Route path="*" element={<ErrorPage/>}/>
+      </Routes>
+      <Toaster />
+    </>
   );
 };
 
