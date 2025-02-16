@@ -4,7 +4,8 @@ const examSchema=mongoose.Schema({
         type:String
     },
     department:{
-        type:String
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Department"
     },
 },{timestamps:true});
 

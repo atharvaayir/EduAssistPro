@@ -24,6 +24,7 @@ app.use(
 
 // to read data from the body of url-encoded type
 
+
 app.use(urlbp.urlencoded({ extended: true }));
 //to read data from the body of json type
 app.use(express.json());
