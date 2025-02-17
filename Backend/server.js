@@ -7,6 +7,7 @@ const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middlewares/errorHandler");
 const urlbp = require("body-parser");
 const classroomRoutes = require("./routes/classroom.routes");
+const blocksRoutes = require("./routes/blocks.routes");
 
 //Connection with the db
 
@@ -29,6 +30,7 @@ app.use(urlbp.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/classroom", classroomRoutes);
+app.use("/api/blocks", blocksRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

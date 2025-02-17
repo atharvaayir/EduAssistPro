@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 const classroomModel = require("../models/classroomModel");
 
 const allClassroomsHandler = async (req, res) => {
@@ -7,7 +7,7 @@ const allClassroomsHandler = async (req, res) => {
 };
 
 const createClassroomHandler = async (req, res) => {
-    console.log("body = ",req.body);
+  console.log("body = ",req.body);
     
   const { name, rows, columns, benchCapacity } = req.body;
   if (!name || !rows || !columns || !benchCapacity)
@@ -37,7 +37,7 @@ const deleteClassroomHandler = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(classroomId)) 
     return res.status(400).json({ message: "Invalid Request | No object deleted" });
 
-  // Check if the document exists and delete
+  // Check if the classroom exists and delete
   const result = await classroomModel.deleteOne({_id: classroomId});
   if (result.deletedCount !== 1) 
     return res.status(400).json({ message: "Invalid Request | No object deleted" });
@@ -57,9 +57,9 @@ const updateClassroomHandler = async (req, res) => {
     return res.status(400).json({ message: "All the fields are required." });
   console.log(name);
   
-  const classroomName = await classroomModel.find({ name });
-  console.log(classroomName.length);
-  if (classroomName.length>1){
+  const classrooms = await classroomModel.find({ name });
+  console.log(classrooms.length);
+  if (classrooms.length>1){
       console.log("Object already exists");
       return res.status(400).json({ message: "Use different name" });
   }

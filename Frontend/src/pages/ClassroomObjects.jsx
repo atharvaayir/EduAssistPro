@@ -75,31 +75,29 @@ const ClassroomObjects = () => {
           <div 
             className="relative group " key={obj._id}
             >
-            <div className="stats shadow border border-neutral-400 rounded-lg w-full h-32 "
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseOut={() => setIsHovered(false)}
-            >
+            <div className="stats shadow border border-neutral-400 rounded-lg w-full h-32 overflow-hidden">
               <div className="stat">
                 <div className="stat-title">
                   <p className="text-ellipsis overflow-hidden w-11/12">
                     {obj.name}
                   </p>
                 </div>
-                <div className="relative w-64 h-32 bg-base-300 rounded-lg shadow-lg p-4 overflow-hidden"
-                >
+                <div className="relative" 
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseOut={() => setIsHovered(false)}>
                 <motion.div
-        className="absolute inset-0 flex items-center justify-center"
-        initial={{ y: 0, opacity: 1 }}
-        animate={{ y: isHovered ? -20 : 0, opacity: isHovered ? 0 : 1 }}
-        transition={{ duration: 0.3 }}
-      >
-        <div className="stat-value flex gap-2 items-center mx-auto">
-          {obj.rows * obj.columns * obj.benchCapacity}
-          <div className="stat-desc text-xs font-normal">
-            /students <br /> per day
-          </div>
-        </div>
-      </motion.div>
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ y: 0, opacity: 1 }}
+                  animate={{ y: isHovered ? -20 : 0, opacity: isHovered ? 0 : 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="stat-value flex gap-2 items-center mx-auto">
+                    {obj.rows * obj.columns * obj.benchCapacity}
+                    <div className="stat-desc text-xs font-normal">
+                      /students <br /> per day
+                    </div>
+                  </div>
+                </motion.div>
 
       {/* Hovered (Visible on hover) */}
       <motion.div

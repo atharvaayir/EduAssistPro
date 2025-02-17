@@ -8,6 +8,7 @@ import CreateClassroom from "./pages/CreateClassroom";
 import ClassroomObjects from "./pages/ClassroomObjects";
 import { Toaster } from "react-hot-toast";
 import UpdateClassroom from "./pages/UpdateClassroom";
+import Blocks from "./pages/Blocks";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -43,6 +44,7 @@ const App = () => {
         <Route exact path="/classrooms" element={<ClassroomObjects/> }/>
         <Route exact path="/create-classroom" element={<CreateClassroom/> }/>
         <Route exact path="/update-classroom" element={<UpdateClassroom/> }/>
+        <Route exact path="/blocks" element={<Blocks/> }/>
         <Route path="*" element={<ErrorPage/>}/>
       </Routes>
       <Toaster />
