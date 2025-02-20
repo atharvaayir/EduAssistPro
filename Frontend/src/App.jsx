@@ -37,7 +37,7 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username}/>: <Login/> }/>
+        <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username} setIsAuthenticated={setIsAuthenticated}/>: <Login/> }/>
         <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login" />} />
 
         {/* classroom routes */}
