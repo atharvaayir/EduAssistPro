@@ -1,6 +1,5 @@
 const mongoose=require('mongoose');
 const ExamTimetableSchema = new mongoose.Schema({
-    _id: String,
     exam_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Exam' },
     exams: [{
         subject_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },

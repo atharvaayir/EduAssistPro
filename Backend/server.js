@@ -37,7 +37,7 @@ app.use('/api/students',require('./routes/student.routes'));
 app.use('/api/departments',require('./routes/departmentRoutes'));
 app.use('/api/exams',require('./routes/examRoutes'))
 app.use('/api/subjects',require('./routes/subjectRoutes'))
-
+app.use('/api/examtimetables',require('./routes/examTimeTableroutes'));
 app.use(errorHandler);
 
 app.listen(PORT, () => {
