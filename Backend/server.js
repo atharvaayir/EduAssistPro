@@ -33,6 +33,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/classroom", classroomRoutes);
 app.use("/api/blocks", blocksRoutes);
 app.use('/api/students',require('./routes/student.routes'));
+app.use('/api/departments',require('./routes/departmentRoutes'))
 app.use(errorHandler);
 
 app.listen(PORT, () => {
