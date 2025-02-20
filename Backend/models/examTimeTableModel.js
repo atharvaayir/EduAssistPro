@@ -10,4 +10,5 @@ const ExamTimetableSchema = new mongoose.Schema({
     }]
 });
 
+
 module.exports= mongoose.model('ExamTimetable', ExamTimetableSchema);
