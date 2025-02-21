@@ -32,7 +32,8 @@ const errorHandler=(err,req,res,next)=>{
           break;
     default:
         res.json({
-            title:"error"
+            title:"error",
+            message:err.message
         })
   }
 

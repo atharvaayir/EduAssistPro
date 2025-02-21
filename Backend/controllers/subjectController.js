@@ -101,6 +101,11 @@ const deleteSubject = asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Subject deleted successfully' });
 });
 
+
+
+
+
+
 // Export all functions
 module.exports = {
     createSubject,

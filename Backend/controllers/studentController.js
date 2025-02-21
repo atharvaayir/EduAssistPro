@@ -1,5 +1,6 @@
 const Student = require("../models/studentModel");
 const asyncHandler = require("express-async-handler");
+const ExcelJS = require("exceljs");
 const getAllStudents = async (req, res) => {
   const students = await Student.find();
   res.json(students);
@@ -74,4 +75,43 @@ const removeStudent=async (req, res) => {
     else res.status(404).json({ message: 'Student not found' });
 };
 
-module.exports = { getAllStudents, getStudentById, createStudent ,removeStudent,updateStudent};
+
+// @desc Import students from Excel file
+// @route POST /api/students/importExcel
+const importStudentsFromExcel = asyncHandler(async (req, res) => {
+  if (!req.file) {
+      res.status(400);
+      throw new Error("No file uploaded.");
+  }
+
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(req.file.buffer);
+  const worksheet = workbook.worksheets[0];
+  //console.log(worksheet);
+  const students = [];
+  worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber === 1) return; // Skip header row
+
+      let [name, department, rollNo, semester] = row.values.slice(1);
+
+      if (!name || !department || !rollNo || !semester) {
+          res.status(400);
+          throw new Error(`Missing required fields at row ${rowNumber}`);
+      }
+
+      students.push({
+          name,
+          department: department, // Convert to ObjectId
+          rollNo: rollNo.toString(),
+          semester: parseInt(semester),
+      });
+  });
+
+  await Student.insertMany(students);
+
+  res.status(201).json({ message: "Students imported successfully", students });
+});
+
+
+
+module.exports = { getAllStudents, getStudentById, createStudent ,removeStudent,updateStudent,importStudentsFromExcel};
