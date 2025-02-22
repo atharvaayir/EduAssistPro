@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const invigilatorSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -12,7 +11,12 @@ const invigilatorSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Please enter password"],
+        required: [true, "Please enter password"]
+    },
+    department:{
+        type:mongoose.Types.ObjectId,
+        ref:"Subject",
+        required:[true,"Please enter department"]
     },
     assignedExams: [
         {
