@@ -1,19 +1,29 @@
-const mongoose=require('mongoose');
-const invigilatorModel=mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,"Please enter name of invigilator"]
-    },
-    email:{
-        type:String,
-        required:[true,"Please enter email"],
-        unique:[true,"Email already exists"]
-    },
-    password:{
-        type:String,
-        required:[true,"Please enter password"]
-    },
+const mongoose = require("mongoose");
 
-},{timestamps:true});
+const invigilatorSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Please enter the name of the invigilator"],
+    },
+    email: {
+        type: String,
+        required: [true, "Please enter email"],
+        unique: [true, "Email already exists"],
+    },
+    password: {
+        type: String,
+        required: [true, "Please enter password"],
+    },
+    assignedExams: [
+        {
+            exam_id: { type: mongoose.Schema.Types.ObjectId, ref: "Exam" },
+            subject_id: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
+            classroom_id: { type: mongoose.Schema.Types.ObjectId, ref: "Classroom" },
+            exam_date: { type: Date, required: true },
+            start_time: { type: String, required: true, match: /^([01]\d|2[0-3]):([0-5]\d)$/ },
+            end_time: { type: String, required: true, match: /^([01]\d|2[0-3]):([0-5]\d)$/ },
+        }
+    ],
+}, { timestamps: true });
 
-module.exports=mongoose.model("Invigilator",invigilatorModel);
+module.exports = mongoose.model("Invigilator", invigilatorSchema);
