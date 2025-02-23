@@ -29,13 +29,13 @@ const createExamTimetable = asyncHandler(async (req, res) => {
 
 // Get all Exam Timetables
 const getExamTimetables = asyncHandler(async (req, res) => {
-    const timetables = await ExamTimetable.find().populate('exam_id').populate('exams.subject_id').populate('exams.classroom_id');
+    const timetables = await ExamTimetable.find().populate('exam_id',"name").populate('exams.subject_id',"name");
     res.status(200).json(timetables);
 });
 
 // Get Exam Timetable by ID
 const getExamTimetableById = asyncHandler(async (req, res) => {
-    const timetable = await ExamTimetable.findById(req.params.id).populate('exam_id').populate('exams.subject_id').populate('exams.classroom_id');
+    const timetable = await ExamTimetable.findById(req.params.id).populate('exam_id').populate('exams.subject_id');
 
     if (!timetable) {
         res.status(404);

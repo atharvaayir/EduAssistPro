@@ -20,7 +20,11 @@ const createStudent = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error("Invalid department ID.");
     }
-    const subjectsArray=subjects.split(' ')
+    let subjectsArray;
+    if(!Array.isArray(subjects))
+    subjectsArray=subjects.split(' ')
+    else
+    subjectsArray=subjects;
     //console.log(subjectsArray);
     //res.json({message:"sucess"});
     // Validate subjects if provided
@@ -95,7 +99,11 @@ const updateStudent = asyncHandler(async (req, res) => {
     }
 
     // Validate subjects if provided
-    const subjectsArray=subjects.split(' ')
+    let subjectsArray;
+    if(!Array.isArray(subjects))
+    subjectsArray=subjects.split(' ')
+    else
+    subjectsArray=subjects;
     for(let i=0;i<subjectsArray.length;i++){
       const subjectValid=await Subject.findById(subjectsArray[i]);
       if(!subjectValid){

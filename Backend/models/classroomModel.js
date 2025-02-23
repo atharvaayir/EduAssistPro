@@ -16,7 +16,7 @@ const classroomSchema=mongoose.Schema({
     benchCapacity:{
         type:Number,
         required:[true,"Bench Capacity field is required"],
-    },
+    }
 },{timestamps:true});
 
 
