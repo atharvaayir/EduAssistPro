@@ -1,21 +1,24 @@
 const mongoose = require("mongoose");
-const subjectModel = mongoose.Schema({
+
+const subjectSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Please enter student name"],
+    required: [true, "Please enter the subject name"],
   },
   department: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
-    required: [true, "Please enter valid department"],
+    required: [true, "Please enter a valid department"],
   },
   code: {
     type: String,
-    required: [true, "Please enter subject code"],
+    required: [true, "Please enter the subject code"],
+    unique: [true, "Subject code must be unique"],
   },
   semester: {
     type: Number,
-    required: [true, "Please enter semester"],
-  },
-});
-module.exports = mongoose.model("Subject", subjectModel);
+    required: [true, "Please enter the semester"],
+  }
+}, { timestamps: true });
+
+module.exports = mongoose.model("Subject", subjectSchema);

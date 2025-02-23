@@ -78,13 +78,13 @@ const deleteDepartment = asyncHandler(async (req, res) => {
     }
 
     await department.deleteOne();
-    res.status(200).json({ message: 'Department deleted successfully' });
+    res.status(200).json({ message: `${department.name} department deleted successfully` });
 });
 
 module.exports={
 createDepartment,
-    getAllDepartments,
-    getDepartmentById,
-    updateDepartment,
-    deleteDepartment
+getAllDepartments,
+getDepartmentById,
+updateDepartment,
+deleteDepartment
 };
