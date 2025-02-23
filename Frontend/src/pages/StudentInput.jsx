@@ -10,20 +10,20 @@ const StudentInput = () => {
   const [showForm, setShowForm] = useState(false);
 
   return (
-    <div style={containerStyle}>
+    <div className="flex">
       <Sidebar />
-      <div style={mainContentStyle}>
+      <div className="flex-1">
         <Navbar />
-        <div style={contentContainerStyle}>
-          <div style={headerStyle}>
-            <h1 style={titleStyle}>Student Input</h1>
-            <Link to="/" style={homeButtonStyle}>
-              <FaHome /> Home
+        <div className="container mx-auto p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold">Student Input</h1>
+            <Link to="/" className="btn btn-primary flex items-center">
+              <FaHome className="mr-2" /> Home
             </Link>
           </div>
-          <div style={createButtonContainerStyle}>
-            <button style={createButtonStyle} onClick={() => setShowForm(true)}>
-              <FaPlus /> Create Student Group
+          <div className="mb-6">
+            <button className="btn btn-primary flex items-center" onClick={() => setShowForm(true)}>
+              <FaPlus className="mr-2" /> Create Student Group
             </button>
           </div>
           <StudentGroupTable />
@@ -32,57 +32,6 @@ const StudentInput = () => {
       {showForm && <StudentGroupForm onClose={() => setShowForm(false)} />}
     </div>
   );
-};
-
-const containerStyle = {
-  display: 'flex',
-};
-
-const mainContentStyle = {
-  flex: 1,
-};
-
-const contentContainerStyle = {
-  maxWidth: '1280px',
-  margin: '0 auto',
-  padding: '2rem',
-};
-
-const headerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-};
-
-const titleStyle = {
-  fontSize: '2rem',
-  fontWeight: 'bold',
-};
-
-const homeButtonStyle = {
-  backgroundColor: '#3490dc',
-  color: 'white',
-  padding: '0.5rem 1rem',
-  borderRadius: '0.375rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  textDecoration: 'none',
-};
-
-const createButtonContainerStyle = {
-  margin: '1rem 0',
-};
-
-const createButtonStyle = {
-  backgroundColor: '#3490dc',
-  color: 'white',
-  padding: '0.5rem 1rem',
-  borderRadius: '0.375rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  cursor: 'pointer',
 };
 
 export default StudentInput;

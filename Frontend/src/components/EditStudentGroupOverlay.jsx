@@ -11,81 +11,23 @@ const EditStudentGroupOverlay = ({ groupId, currentName, onClose }) => {
   };
 
   return (
-    <div style={overlayStyle}>
-      <div style={modalStyle}>
-        <h2 style={modalTitleStyle}>Edit Student Group</h2>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-4">Edit Student Group</h2>
         <input
           type="text"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           placeholder="Student Group Name"
-          style={inputStyle}
+          className="input input-bordered w-full mb-4"
         />
-        <div style={buttonContainerStyle}>
-          <button style={cancelButtonStyle} onClick={onClose}>Cancel</button>
-          <button style={saveButtonStyle} onClick={handleSave}>Save</button>
+        <div className="flex justify-end">
+          <button className="btn btn-secondary mr-2" onClick={onClose}>Cancel</button>
+          <button className="btn btn-primary" onClick={handleSave}>Save</button>
         </div>
       </div>
     </div>
   );
-};
-
-const overlayStyle = {
-  position: 'fixed',
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  zIndex: 1000,
-};
-
-const modalStyle = {
-  backgroundColor: 'white',
-  padding: '1.5rem',
-  borderRadius: '0.375rem',
-  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-  width: '400px',
-  maxWidth: '90%',
-};
-
-const modalTitleStyle = {
-  fontSize: '1.25rem',
-  fontWeight: 'bold',
-  marginBottom: '1rem',
-};
-
-const inputStyle = {
-  border: '1px solid #ccc',
-  padding: '0.5rem',
-  marginBottom: '1rem',
-  width: '100%',
-};
-
-const buttonContainerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-};
-
-const cancelButtonStyle = {
-  backgroundColor: '#6c757d',
-  color: 'white',
-  padding: '0.5rem 1rem',
-  borderRadius: '0.375rem',
-  cursor: 'pointer',
-  border: 'none',
-};
-
-const saveButtonStyle = {
-  backgroundColor: '#3490dc',
-  color: 'white',
-  padding: '0.5rem 1rem',
-  borderRadius: '0.375rem',
-  cursor: 'pointer',
-  border: 'none',
 };
 
 export default EditStudentGroupOverlay;

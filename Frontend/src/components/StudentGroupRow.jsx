@@ -12,20 +12,20 @@ const StudentGroupRow = ({ group }) => {
 
   return (
     <>
-      <tr style={rowStyle}>
-        <td style={cellStyle}>
+      <tr className="border-b">
+        <td className="p-4">
           {group.name}
-          <div style={buttonGroupStyle}>
-            <button style={iconButtonStyle} onClick={() => setShowEditOverlay(true)}><FaEdit /> Edit</button>
-            <button style={iconButtonStyle} onClick={() => deleteStudentGroup(group.id)}><FaTrash /> Delete</button>
-            <button style={iconButtonStyle} onClick={() => setShowUploadOverlay(true)}><FaUpload /> Upload</button>
+          <div className="flex gap-2 mt-2">
+            <button className="btn btn-sm btn-primary" onClick={() => setShowEditOverlay(true)}><FaEdit /> Edit</button>
+            <button className="btn btn-sm btn-danger" onClick={() => deleteStudentGroup(group.id)}><FaTrash /> Delete</button>
+            <button className="btn btn-sm btn-secondary" onClick={() => setShowUploadOverlay(true)}><FaUpload /> Upload</button>
           </div>
         </td>
-        <td style={cellStyle}>
-          <div style={fileContainerStyle}>
+        <td className="p-4">
+          <div className="flex flex-wrap gap-2">
             {group.files.map((file) => (
-              <div key={file} style={fileBoxStyle}>
-                {file} <button style={deleteFileButtonStyle} onClick={() => deleteFileFromGroup(group.id, file)}>x</button>
+              <div key={file} className="flex items-center gap-2 bg-gray-200 p-2 rounded">
+                {file} <button className="btn btn-xs btn-danger" onClick={() => deleteFileFromGroup(group.id, file)}>x</button>
               </div>
             ))}
           </div>
@@ -35,55 +35,6 @@ const StudentGroupRow = ({ group }) => {
       {showEditOverlay && <EditStudentGroupOverlay groupId={group.id} currentName={group.name} onClose={() => setShowEditOverlay(false)} />}
     </>
   );
-};
-
-const rowStyle = {
-  borderBottom: '1px solid #ccc',
-};
-
-const cellStyle = {
-  padding: '0.75rem',
-  textAlign: 'left',
-};
-
-const buttonGroupStyle = {
-  display: 'flex',
-  gap: '0.5rem',
-  marginTop: '0.5rem',
-};
-
-const iconButtonStyle = {
-  backgroundColor: '#3490dc',
-  color: 'white',
-  padding: '0.25rem 0.5rem',
-  borderRadius: '0.375rem',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.25rem',
-};
-
-const fileContainerStyle = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  gap: '0.5rem',
-};
-
-const fileBoxStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  backgroundColor: '#f1f1f1',
-  padding: '0.25rem 0.5rem',
-  borderRadius: '0.375rem',
-};
-
-const deleteFileButtonStyle = {
-  backgroundColor: '#e3342f',
-  color: 'white',
-  padding: '0.25rem',
-  borderRadius: '0.375rem',
-  cursor: 'pointer',
 };
 
 export default StudentGroupRow;
