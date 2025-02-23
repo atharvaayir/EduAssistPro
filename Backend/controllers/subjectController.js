@@ -10,7 +10,7 @@ const createSubject = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error('All fields are required: name, department, code, and semester.');
     }
-
+    
     // Check if the department exists
     const departmentExists = await Department.findById(department);
     if (!departmentExists) {
@@ -100,10 +100,6 @@ const deleteSubject = asyncHandler(async (req, res) => {
     await subject.deleteOne();
     res.status(200).json({ message: 'Subject deleted successfully' });
 });
-
-
-
-
 
 
 // Export all functions
