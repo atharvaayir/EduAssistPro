@@ -31,7 +31,7 @@ const errorHandler=(err,req,res,next)=>{
           });
           break;
     default:
-        res.json({
+        res.status(400).json({
             title:"error",
             message:err.message
         })
