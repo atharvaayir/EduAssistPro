@@ -54,7 +54,7 @@ const deleteBlockHandler = async (req,res) => {
       if (result.deletedCount !== 1) 
         return res.status(400).json({ message: "Invalid Request | No block deleted" });
     
-      return res.status(200).json({ message: "Block deleted successfully" });
+      return res.status(200).json({ message: "block deleted successfully" });
 }
 
 const updateBlockHandler = async (req,res) => {

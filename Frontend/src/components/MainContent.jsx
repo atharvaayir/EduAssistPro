@@ -1,4 +1,4 @@
-// src/components/MainContent.js
+// Frontend/src/components/MainContent.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StatisticsBox from './StatisticsBox';
@@ -19,16 +19,21 @@ function MainContent() {
 
       {/* Navigation Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        <button className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50">
-          Student Data
-        </button>
         <Link 
-        to="/classrooms"
-        className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
-      >
-        <button className="">
-          Classroom Data
-        </button>
+          to="/student-input"
+          className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
+        >
+          <button className="">
+            Student Data
+          </button>
+        </Link>
+        <Link 
+          to="/classrooms"
+          className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
+        >
+          <button className="">
+            Classroom Data
+          </button>
         </Link>
         <button className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50">
           Generate Timetable

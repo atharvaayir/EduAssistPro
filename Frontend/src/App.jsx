@@ -1,14 +1,16 @@
+// Frontend/src/App.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./components/Dashboard"; // This is your dashboard view (Navbar, Sidebar, MainContent, etc.)
+import Dashboard from "./components/Dashboard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
-import CreateClassroom from "./pages/classroom/CreateClassroom";
-import ClassroomObjects from "./pages/classroom/ClassroomObjects";
+import CreateClassroom from "./pages/CreateClassroom";
+import ClassroomObjects from "./pages/ClassroomObjects";
 import { Toaster } from "react-hot-toast";
-import UpdateClassroom from "./pages/classroom/UpdateClassroom";
-import Blocks from "./pages/block/Blocks";
+import UpdateClassroom from "./pages/UpdateClassroom";
+import Blocks from "./pages/Blocks";
+import StudentInput from "./pages/StudentInput"; // Import the new page
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -45,6 +47,7 @@ const App = () => {
         <Route exact path="/create-classroom" element={<CreateClassroom/> }/>
         <Route exact path="/update-classroom" element={<UpdateClassroom/> }/>
         <Route exact path="/blocks" element={<Blocks/> }/>
+        <Route exact path="/student-input" element={<StudentInput/> }/> {/* Add the new route */}
         <Route path="*" element={<ErrorPage/>}/>
       </Routes>
       <Toaster />

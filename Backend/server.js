@@ -32,7 +32,15 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/classroom", classroomRoutes);
 app.use("/api/blocks", blocksRoutes);
 app.use("/api/pdf",require("./routes/pdf.routes"));
+
+//paths to be tested
+app.use('/api/students',require('./routes/student.routes'));
+app.use('/api/departments',require('./routes/departmentRoutes'));
+app.use('/api/exams',require('./routes/examRoutes'))
+app.use('/api/subjects',require('./routes/subjectRoutes'))
+app.use('/api/examtimetables',require('./routes/examTimeTableroutes'));
 app.use(errorHandler);
+
 app.listen(PORT, () => {
   console.log("Server running at PORT:", PORT);
 });
