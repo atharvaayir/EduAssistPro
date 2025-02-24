@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
-import CreateClassroom from "./pages/CreateClassroom";
-import ClassroomObjects from "./pages/ClassroomObjects";
+import CreateClassroom from "./pages/classroom/CreateClassroom";
+import ClassroomObjects from "./pages/classroom/ClassroomObjects";
 import { Toaster } from "react-hot-toast";
-import UpdateClassroom from "./pages/UpdateClassroom";
-import Blocks from "./pages/Blocks";
+import UpdateClassroom from "./pages/classroom/UpdateClassroom";
+import Blocks from "./pages/block/Blocks";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -37,7 +37,7 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username}/>: <Login/> }/>
+        <Route exact path="/login" element={isAuthenticated ? <Dashboard username={username} setIsAuthenticated={setIsAuthenticated}/>: <Login/> }/>
         <Route index exact element={isAuthenticated ? <Dashboard username={username}  setIsAuthenticated={setIsAuthenticated}/> : <Navigate to="/login" />} />
 
         {/* classroom routes */}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <style>
+        body{
+            margin-left: 20px;
+            margin-top: 20px;
+            width: 900px;
+            height: 1500px;
+        }
+        .container {
+            border: 2px solid black;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        .header {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .images {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+        .details, .exam-table {
+            text-align: left;
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .exam-table th, .exam-table td {
+            border: 1px solid black;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">Goa College of Engineering</div>
+
+        <!-- User Image & QR Code -->
+        <div class="images">
+            <img src="<%= "userImage" %>" alt="User Image" width="100" height="100">
+            <img src="<%= "qrCodeBase64" %>" alt="QR Code" width="100" height="100">
+        </div>
+
+        <!-- Details -->
+        <table class="details">
+            <tr><td><strong>Name:</strong> ______________</td></tr>
+            <tr><td><strong>Course Name:</strong> ______________</td></tr>
+            <tr><td><strong>Semester:</strong> ______________</td></tr>
+            <tr><td><strong>Branch:</strong> ______________</td></tr>
+            <tr><td><strong>Seat Number:</strong> ______________</td></tr>
+        </table>
+
+        <!-- Exam Table -->
+        <table class="exam-table">
+            <tr>
+                <th>Paper Code</th>
+                <th>Date</th>
+                <th>Name of Paper</th>
+            </tr>
+            <tr>
+                <td>CS101</td>
+                <td>______________</td>
+                <td>______________</td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 20px;">
+            <strong>College Stamp:</strong> ______________
+        </div>
+    </div>
+</body>
+</html>

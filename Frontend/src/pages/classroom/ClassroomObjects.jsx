@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../../components/PageHeader";
 import { EllipsisVertical, Pencil, Trash, Plus } from "lucide-react";
-import { useClassroomStore } from "../store/useClassroomStore";
+import { useClassroomStore } from "../../store/useClassroomStore";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {motion} from "framer-motion";

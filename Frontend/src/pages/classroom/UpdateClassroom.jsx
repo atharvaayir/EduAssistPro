@@ -1,8 +1,8 @@
 import { useRef } from "react";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../../components/PageHeader";
 import { ArrowBigLeft, Pen } from "lucide-react";
-import NumberInput from "../components/NumberInput";
-import { useClassroomStore } from "../store/useClassroomStore";
+import NumberInput from "../../components/NumberInput";
+import { useClassroomStore } from "../../store/useClassroomStore";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect } from 'react'

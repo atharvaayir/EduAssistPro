@@ -61,7 +61,6 @@ export const useClassroomStore = create((set,get) => ({
             if (res.data.message === "Classroom updated") {
                 
                 localStorage.setItem("toastMessage", "Classroom updated successfully!");
-                console.log(789);
                 navigate("/classrooms"); // Redirect to the desired page
             } else if (res.data.message === "Use different name") {
                 toast.error("Choose a different class name.");
