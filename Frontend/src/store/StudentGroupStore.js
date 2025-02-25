@@ -1,8 +1,27 @@
+import toast from 'react-hot-toast';
 import { create } from 'zustand';
 
 export const useStudentGroupStore = create((set) => ({
   studentGroups: [],
-  addStudentGroup: (group) => set((state) => ({ studentGroups: [...state.studentGroups, group] })),
+  addStudentGroup: (group) => set((state) =>{
+    
+      if (group.name.trim().length === 0) {
+          toast.error("Empty Group Name");
+          return { studentGroups: [...state.studentGroups] };
+      }
+  
+      // Check if the group name already exists (case-insensitive comparison)
+      const groupExists = state.studentGroups.some(
+          (g) => g.name.toLowerCase() === group.name.toLowerCase()
+      );
+  
+      if (groupExists) {
+          toast.error("Group of this name already exists");
+          return { studentGroups: [...state.studentGroups] };
+      }
+  
+      return { studentGroups: [...state.studentGroups, group] };
+  }),
   updateStudentGroup: (id, newName) => set((state) => ({
     studentGroups: state.studentGroups.map((group) =>
       group.id === id ? { ...group, name: newName } : group

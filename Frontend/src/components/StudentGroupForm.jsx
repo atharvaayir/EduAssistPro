@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useStudentGroupStore } from '../store/StudentGroupStore';
 import { FaPlus } from 'react-icons/fa';
 
@@ -6,7 +6,11 @@ const StudentGroupForm = ({ onClose }) => {
   const [groupName, setGroupName] = useState('');
   const addStudentGroup = useStudentGroupStore((state) => state.addStudentGroup);
 
-  const handleSubmit = () => {
+  useEffect(()=>{
+    document.getElementById("student-group-name-input").focus();
+  });
+
+const handleSubmit = () => {
     addStudentGroup({ id: Date.now(), name: groupName, files: [] });
     onClose();
   };
@@ -17,6 +21,7 @@ const StudentGroupForm = ({ onClose }) => {
         <h2 className="text-2xl font-bold mb-4">New Student Group</h2>
         <input
           type="text"
+          id='student-group-name-input'
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)}
           placeholder="Student Group Name"
