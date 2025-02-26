@@ -8,6 +8,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const urlbp = require("body-parser");
 const classroomRoutes = require("./routes/classroom.routes");
 const blocksRoutes = require("./routes/blocks.routes");
+const sendEmail=require('./utils/sendEmail');
 
 //Connection with the db
 
@@ -31,6 +32,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/classroom", classroomRoutes);
 app.use("/api/blocks", blocksRoutes);
 
+sendEmail("atharvaayir5@gmail.com","hello","This is messgage");
 
 //paths to be tested
 app.use('/api/students',require('./routes/student.routes'));

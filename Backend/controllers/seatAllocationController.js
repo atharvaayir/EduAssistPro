@@ -2,6 +2,7 @@ const SeatAllocation=require('../models/seatAllocationModel');
 const ExamTimetable=require('../models/examTimeTableModel');
 const Student=require('../models/studentModel');
 const Classroom=require('../models/classroomModel');
+const Invigilator=require('../models/invigilatorModel')
 const asyncHandler=require('express-async-handler');
 const getStudentAnsweringExam=async(subject_check)=>{
     try {
@@ -13,7 +14,37 @@ const getStudentAnsweringExam=async(subject_check)=>{
     }
 
 }
- 
+const findInvigilators=async(exam_id,exam_date,subject_id,classroom_id,start_time,end_time)=>{
+    const invigilatorsAvailable= await Invigilator.find();
+    //console.log(invigilatorsAvailable);
+    for(let invigilator of invigilatorsAvailable){
+        const isOccupied = invigilator.assignedExams.some(entry =>
+            entry.exam_date.toISOString().split("T")[0] === exam_date.toISOString().split("T")[0] &&
+            (
+                (start_time >= entry.start_time && start_time < entry.end_time) ||  // Overlapping start
+                (end_time > entry.start_time && end_time <= entry.end_time) ||      // Overlapping end
+                (start_time <= entry.start_time && end_time >= entry.end_time)      // Full overlap
+            )
+        );
+        
+        if(!isOccupied)
+        {
+            const makingChangesToInvigilator=await Invigilator.findOneAndUpdate({_id:invigilator._id},{$push:{
+                assignedExams:{
+                    exam_id,
+                    subject_id,
+                    classroom_id,
+                    exam_date,
+                    start_time,
+                    end_time
+                }
+            }})
+            return invigilator._id;
+        }
+        
+       
+    }
+}
 const findAvailableClassrooms = async (seatsRequired, examDate, startTime, endTime) => {
     try {
         let remainingSeats = seatsRequired;
@@ -72,7 +103,7 @@ const generateSeatingArrangment=async(subject_id,students,classrooms,column)=>{
         console.log(allocated_seats);
         classroomsWithSeatingData.push({
             classroom_id:classrooms[i].classroom._id,
-            invigilator_id:"",
+            // invigilator_id:"",
             allocated_seats
         });
     }
@@ -104,7 +135,7 @@ const allocateSeats=asyncHandler(async (req,res)=>{
    let n=exam_details.length;
    let used=new Array(n).fill(0);
    //console.log(used);
-  
+   const inv=findInvigilators(exam_id,exam_details[0].exam_date,exam_details[0].subject_id,"67bf275c7daa82a9e8066d5a",exam_details[0].start_time,exam_details[0].end_time)
     for(let i=0;i<n;i++)
     {
         if(used[i]===1)
@@ -121,6 +152,18 @@ const allocateSeats=asyncHandler(async (req,res)=>{
              let maxSizeRequired=max(studentsFromFirstExam.length,studentsFromSecondExam.length);
              let classroomAllocated= await findAvailableClassrooms(maxSizeRequired,exam_details[i].exam_date,exam_details[i].start_time,exam_details[i].end_time)
              console.log(classroomAllocated);
+            //  const invigilators=[];
+            //  for(let classroomOne of classroomAllocated){
+            //  let invigilatorAssigned=await findInvigilators(exam_details[i].exam_id,exam_details[i].subject_id,classroomAllocated[0],exam_details[i].start_time,exam_details.end_time);
+                
+            //  if(!invigilatorAssigned){
+            //     res.status(400);
+            //     throw new Error("No invigilator found for the exam");
+            //  }
+            //  invigilators.push(invigilatorAssigned);
+             
+            // }
+             
              if(classroomAllocated.length===0){
                 res.status(400);
                 throw new Error("All the classrooms are full for the configuration");
@@ -157,6 +200,17 @@ const allocateSeats=asyncHandler(async (req,res)=>{
                 throw new Error("All the classrooms are full for the configuration");
             }
             console.log(classroomAllocated);
+            // const invigilators=[];
+            // for(let classroomOne of classroomAllocated){
+            //     let invigilatorAssigned=await findInvigilators(exam_details[i].exam_id,exam_details[i].subject_id,classroomAllocated[0],exam_details[i].start_time,exam_details.end_time);
+                
+            //     if(!invigilatorAssigned){
+            //        res.status(400);
+            //        throw new Error("No invigilator found for the exam");
+            //     }
+            //     invigilators.push(invigilatorAssigned);
+                
+            // }
             allocations.push(await generateSeatingArrangment(exam_details[i].subject_id,studentsFromFirstExam,classroomAllocated,1));
             used[i]=1;
 
@@ -165,18 +219,20 @@ const allocateSeats=asyncHandler(async (req,res)=>{
                 await Classroom.findOneAndUpdate({_id},{$push:{inUse:{
                     date:exam_details[i].exam_date,
                     start_time:exam_details[i].start_time,
-                    end_time:exam_details[i].start_time
+                    end_time:exam_details[i].start_time,
+                    
                 }}})
             }
         }
         
     }
+   
+    
+    await SeatAllocation.insertOne({exam_id,allocations});
     res.json({
         exam_id,
         allocations
     });
-    
-    await SeatAllocation.insertMany({exam_id,allocations});
     //console.log(await getStudentAnsweringExam("67bb47f87595cf700eca4619"));
 
 
