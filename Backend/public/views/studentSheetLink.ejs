@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Student Sheet Link</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 1rem;
+        }
+        #wider{
+            position: relative;
+        }
+        #wider-inside{
+            position: absolute;
+            width: 900px;
+            opacity: 0;
+        }
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            page-break-after: always;
+        }
+        th, td {
+            text-align: center;
+            border: 2px solid black;
+        }
+        </style>
+    </head>
+    <body>
+        <!-- don't touch this div, it looks random text but it helps in 
+         resizing the generated table to be viewed correctly in the pdf -->
+         <div id="wider">
+            <div id="wider-inside">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Incidunt ad minus itaque ab iusto eligendi, deleniti delectus
+                odit
+            </div>
+        </div>
+        
+        <% let supplement_overflow = []; %>
+
+        <table class="main-table">
+            <thead>
+                <tr>
+                    <th>Student Seat Number</th>
+                    <th>Main Sheet</th>
+                    <th>Supplement 1</th>
+                    <th>Supplement 2</th>
+                    <th>Supplement 3</th>
+                    <th>Supplement 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for( let index = 0; index < data.length; index++ ) { %>
+                    <tr>
+                        <td>
+                            <% if (typeof data[index].supplement !== 'undefined' && data[index].supplement.length>4) { %>
+                                <%= data[index].seatNumber%><span style="font-weight: bold;">*</span>
+                                <% supplement_overflow.push(index) %>
+                                <% } else { %>
+                                    <%= data[index].seatNumber%>
+                            <% } %>
+                
+                        </td>
+                        <td> <%= typeof data[index].mainSheet !== 'undefined' ?  data[index].mainSheet : "Absent" %> </td>
+                        <td> <%= typeof data[index].supplement !== 'undefined' && data[index].supplement[0] ? data[index].supplement[0] : "-----" %> </td>
+                        <td> <%= typeof data[index].supplement !== 'undefined' && data[index].supplement[1] ? data[index].supplement[1] : "-----" %> </td>
+                        <td> <%= typeof data[index].supplement !== 'undefined' && data[index].supplement[2] ? data[index].supplement[2] : "-----" %> </td>
+                        <td> <%= typeof data[index].supplement !== 'undefined' && data[index].supplement[3] ? data[index].supplement[3] : "-----" %> </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <!-- check if there exist student with more than 4 supplement, then only display them -->
+
+        <% if (supplement_overflow.length>0) { %>
+            <table class="main-table">
+                <thead>
+                    <tr>
+                        <th>Student Seat Number</th>
+                        <th>Main Sheet</th>
+                        <th>Supplements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% supplement_overflow.forEach(index => { %>
+                        <tr>
+                            <td> <%= data[index].seatNumber %> </td>
+                            <td> <%= typeof data[index].mainSheet !== 'undefined' ?  data[index].mainSheet : "Absent" %> </td>
+                            <td>
+                                <%= data[index].supplement[0] %> 
+                                <% for( let sup_no = 1; sup_no < data[index].supplement.length; sup_no++ ) { %>
+                                    , <%= data[index].supplement[sup_no] %> 
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </body>
+</html>

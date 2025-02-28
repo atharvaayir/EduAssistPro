@@ -23,7 +23,7 @@ function MainContent() {
           to="/student-input"
           className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
         >
-          <button className="">
+          <button>
             Student Data
           </button>
         </Link>
@@ -35,9 +35,12 @@ function MainContent() {
             Classroom Data
           </button>
         </Link>
-        <button className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50">
-          Generate Timetable
-        </button>
+        <Link
+          to="/new-exam"
+          className='bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50'
+        >
+            New Exam
+        </Link>
         <button className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50">
           Queries
         </button>

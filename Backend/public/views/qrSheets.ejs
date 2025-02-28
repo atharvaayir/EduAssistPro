@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container{
+            margin: auto;
+            border-spacing: 20px;
+        }
+        .single{
+            position: relative;
+            border: 2px solid black;
+            width: 180px;
+            height: 230px;
+            page-break-inside: avoid;
+            margin: 10px;
+        }
+        img{
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+        }
+        h1{
+            position: absolute;
+            top: 5px;
+            width: 100%;
+            text-align: center;
+            /* background-color: black; */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        tr{
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <table class="container">
+        <% let i = 0;%>
+        <tr>
+        <% for (let key in data) { %>
+            <% if (i%4==0) { %> </tr><tr> <% } %>
+            <% if (i%16==0) { %> </table><table class="container"><tr> <% } %>
+            <td class="single" >
+                <h1> <%= key %> </h1>
+                <img src="<%= data[key] %>" width="150" height="150">
+            </td>
+            <% i += 1 ; %>
+        <% } %>
+        </tr>
+    </table>
+</body>
+</html>

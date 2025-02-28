@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Attendance Sheet</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 1rem;
+        }
+        #wider{
+            position: relative;
+        }
+        #wider-inside{
+            position: absolute;
+            width: 900px;
+            opacity: 0;
+        }
+        .main-table {
+            width: 100%;
+            border-spacing: 10px;
+            translate: -5px;
+        }
+        .cell-table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: center;
+        }
+        .seat-number{
+            border: 2px solid black;
+            padding: 8px;
+        }
+        .attendance{
+            width: 20px;
+            height: 20px;
+            border: 2px solid black;
+            padding: 8px;
+        }
+        </style>
+    </head>
+    <body>
+        <!-- don't touch this div, it looks random text but it helps in 
+         resizing the generated table to be viewed correctly in the pdf -->
+        <div id="wider">
+            <div id="wider-inside">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Incidunt ad minus itaque ab iusto eligendi, deleniti delectus
+                odit
+            </div>
+        </div>
+
+        <%
+        let maxColumnsPerPage = 4;
+        let maxRowsPerPage = 22;
+        // let totalPages = Math.ceil(columns / maxColumnsPerPage) *
+        Math.ceil(rows / maxRowsPerPage);
+
+        for (let col_num = 0; col_num < columns;) {
+        const current_page_cols = Math.min(maxColumnsPerPage, columns - col_num);
+        %>
+        <table class="main-table" style="page-break-after: always;">
+            <thead>
+                <tr>
+                    <% for (let i = 0; i < current_page_cols;i++) { %>
+                    <th>Column <%= col_num+i+1 %> </th>
+                    <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                for (let index = 0; index < rows; index++) {
+                %><tr><%
+                    for(let col_index = 0;col_index<current_page_cols;col_index++){
+                    %>
+                    <td>
+                        <table class="cell-table">
+                            <td class="seat-number"><%= seatNumbers[col_num+col_index][index] %></td>
+                            <td class="attendance"><%= attendance[col_num+col_index][index] ? 'P' : 'A' %></td>
+                        </table>
+                    </td>
+                    <%
+                    }
+                    %></tr><%
+                }
+                %></tbody><%
+            col_num+=current_page_cols;
+            %></table><%
+        }
+        %>
+    </body>
+</html>
