@@ -1,9 +1,9 @@
-const asyncHandler=require('express-async-handler');
-const User=require('../models/userModel');
-const bycrypt=require('bcrypt');
-const dotenv=require('dotenv');
-const jwt=require('jsonwebtoken');
-const validateToken=require('../middlewares/validateToken');
+const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
+const bycrypt = require("bcrypt");
+const dotenv = require("dotenv");
+const jwt = require("jsonwebtoken");
+const validateToken = require("../middlewares/validateToken");
 //@desc Register a user
 //@route POST /api/users/register
 //@access public

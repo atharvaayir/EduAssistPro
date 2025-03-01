@@ -1,12 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const { allBlocksHandler, createBlockHandler, deleteBlockHandler, updateBlockHandler, singleBlockDetailsHandler } = require("../controllers/blocks.controller");
+const {
+    createStudent,
+    getAllStudents,
+    getStudentById,
+    updateStudent,
+    deleteStudent
+} = require("../controllers/studentController");
 
-
-router.get("/",allBlocksHandler); //get all blocks
-router.post("/create",createBlockHandler); // create block
-router.delete("/delete/:id",deleteBlockHandler); // delete block
-router.patch("/update/:id",updateBlockHandler); // update block
-router.get("/:id",singleBlockDetailsHandler); // single block
+router.get("/", getAllStudents); // Get all students
+router.post("/create", createStudent); // Create a student
+router.delete("/delete/:id", deleteStudent); // Delete a student
+router.patch("/update/:id", updateStudent); // Update a student
+router.get("/:id", getStudentById); // Get a single student by ID
 
 module.exports = router;

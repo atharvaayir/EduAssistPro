@@ -8,6 +8,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const urlbp = require("body-parser");
 const classroomRoutes = require("./routes/classroom.routes");
 const blocksRoutes = require("./routes/blocks.routes");
+const sendEmail=require('./utils/sendEmail');
 
 //Connection with the db
 
@@ -24,7 +25,6 @@ app.use(
 );
 
 // to read data from the body of url-encoded type
-
 app.use(urlbp.urlencoded({ extended: true }));
 //to read data from the body of json type
 app.use(express.json());
@@ -33,13 +33,18 @@ app.use("/api/classroom", classroomRoutes);
 app.use("/api/blocks", blocksRoutes);
 app.use("/api/pdf",require("./routes/pdf.routes"));
 
+sendEmail("atharvaayir5@gmail.com","hello","This is messgage");
+
 //paths to be tested
 app.use('/api/students',require('./routes/student.routes'));
 app.use('/api/departments',require('./routes/departmentRoutes'));
-app.use('/api/exams',require('./routes/examRoutes'))
-app.use('/api/subjects',require('./routes/subjectRoutes'))
-app.use('/api/examtimetables',require('./routes/examTimeTableroutes'));
+app.use('/api/exams',require('./routes/examRoutes'));
+app.use('/api/subjects',require('./routes/subjectRoutes'));
+app.use('/api/examtimetables',require('./routes/examTimeTableroutes'));//
+app.use('/api/invigilators',require('./routes/invigilatorRoutes'));
+app.use('/api/seatallocation',require('./routes/seatAllocationRoutes'));//
 app.use(errorHandler);
+
 
 app.listen(PORT, () => {
   console.log("Server running at PORT:", PORT);
