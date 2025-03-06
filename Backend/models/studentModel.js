@@ -5,6 +5,10 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter student name"],
   },
+  email:{
+    type:String,
+    required:[true,"Student email required"]
+  },
   department: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Department",
