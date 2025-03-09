@@ -1,6 +1,7 @@
 // src/components/Sidebar.js
 import React, { useState } from 'react';
 import { FaChevronLeft, FaChevronRight, FaUser, FaClipboardList, FaChalkboard, FaFilePdf, FaMailBulk, FaChartBar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -35,9 +36,9 @@ function Sidebar() {
             <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaClipboardList className="mr-2" /> Exam Management
             </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+            <Link to="/seating-arrangement" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaChalkboard className="mr-2" /> Seating Arrangement
-            </button>
+            </Link>
             <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaFilePdf className="mr-2" /> PDF Generation
             </button>

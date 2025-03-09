@@ -4,6 +4,9 @@ const Student=require('../models/studentModel');
 const Classroom=require('../models/classroomModel');
 const Invigilator=require('../models/invigilatorModel')
 const asyncHandler=require('express-async-handler');
+
+const seatingArrangement  = require("../utils/seatingArrangementClass.js");
+
 const getStudentAnsweringExam=async(subject_check)=>{
     try {
         let students = await Student.find({ subjects: subject_check });
@@ -242,6 +245,73 @@ const allocateSeats=asyncHandler(async (req,res)=>{
     //res.status(200).json({msg:"This is seat allocation module"});
 });
 
+const generateSeatingArrangement = async (req,res) => {
+    const data = [
+        {
+        name: "slot 1",
+          start: "Feb5 10:00AM",
+          end: "Feb5 01:00PM",
+          subjects: [
+            {
+              sub_id: 1,
+              students: 40,
+            },
+            {
+              sub_id: 2,
+              students: 40,
+            },
+            {
+              sub_id: 3,
+              students: 40,
+            },
+            {
+              sub_id: 4,
+              students: 30,
+            },
+            {
+              sub_id: 5,
+              students: 30,
+            },
+          ],
+        },
+        {
+          name: "slot 2",
+          start: "Feb6 10:00AM",
+          end: "Feb6 01:00PM",
+          subjects: [
+            {
+              sub_id: 1,
+              students: 60,
+            },
+          ],
+        },
+    ];
+    const classRooms = [
+        {
+          name: "CR 1",
+          rows: 10,
+          cols: 4,
+          benchCapacity: 3,
+        },
+        {
+          name: "CR 2",
+          rows: 10,
+          cols: 4,
+          benchCapacity: 2,
+        },
+        {
+          name: "CR 3",
+          rows: 10,
+          cols: 4,
+          benchCapacity: 2,
+        },
+    ];
+    const strictnessLevel = 2;
+    let seatAllocation = new seatingArrangement(data,classRooms,strictnessLevel);
+
+    let a = seatAllocation.seatAlloc();
+    res.send(a);
+}
 
 
-module.exports={allocateSeats};
+module.exports={allocateSeats,generateSeatingArrangement};

@@ -12,6 +12,7 @@ import UpdateClassroom from "./pages/classroom/UpdateClassroom";
 import Blocks from "./pages/Blocks";
 import StudentInput from "./pages/StudentInput"; // Import the new page
 import NewExam from "./pages/exam/NewExam";
+import SeatingArrangement from "./pages/SeatingArrangement";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -49,6 +50,7 @@ const App = () => {
         <Route exact path="/update-classroom" element={<UpdateClassroom/> }/>
         <Route exact path="/blocks" element={<Blocks/> }/>
         <Route exact path="/student-input" element={<StudentInput/> }/> {/* Add the new route */}
+        <Route exact path="/seating-arrangement" element={<SeatingArrangement/> }/> {/* Add the new route */}
 
         {/* new routes */}
         <Route path="/new-exam" element={isAuthenticated ? <NewExam/> : <Navigate to="/login"/>} />

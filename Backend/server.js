@@ -33,7 +33,7 @@ app.use("/api/classroom", classroomRoutes);
 app.use("/api/blocks", blocksRoutes);
 app.use("/api/pdf",require("./routes/pdf.routes"));
 
-sendEmail("atharvaayir5@gmail.com","hello","This is messgage");
+// sendEmail("atharvaayir5@gmail.com","hello","This is messgage");
 
 //paths to be tested
 app.use('/api/students',require('./routes/student.routes'));
@@ -45,6 +45,10 @@ app.use('/api/invigilators',require('./routes/invigilatorRoutes'));
 app.use('/api/seatallocation',require('./routes/seatAllocationRoutes'));//
 app.use(errorHandler);
 
+// app route to test incoming feature
+app.get("/api/test",(req, res) => {
+  res.send("prepare a test method");  
+})
 
 app.listen(PORT, () => {
   console.log("Server running at PORT:", PORT);
