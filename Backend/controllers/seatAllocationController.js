@@ -84,7 +84,7 @@ const findAvailableClassrooms = async (seatsRequired, examDate, startTime, endTi
         return [];
     }
 };
-const generateSeatingArrangment=async(subject_id,students,classrooms,column)=>{
+const generateSeatingArrangment=async(exam_id,exam_date,startTime,endTime,subject_id,students,classrooms,column)=>{
     let p=0;
     const classroomsWithSeatingData=[];
     for(let i=0;i<classrooms.length&&p<students.length;i++){
@@ -104,9 +104,14 @@ const generateSeatingArrangment=async(subject_id,students,classrooms,column)=>{
             p++;
         }
         console.log(allocated_seats);
+        const inv=await findInvigilators(exam_id,exam_date,subject_id,classrooms[i].classroom._id,startTime,endTime);
+        if(!inv){
+            throw new Error("Not enough invigilators free to conduct the exams");
+        }
+        console.log(inv);
         classroomsWithSeatingData.push({
             classroom_id:classrooms[i].classroom._id,
-            // invigilator_id:"",
+            invigilator_id:inv,
             allocated_seats
         });
     }
@@ -138,7 +143,7 @@ const allocateSeats=asyncHandler(async (req,res)=>{
    let n=exam_details.length;
    let used=new Array(n).fill(0);
    //console.log(used);
-   const inv=findInvigilators(exam_id,exam_details[0].exam_date,exam_details[0].subject_id,"67bf275c7daa82a9e8066d5a",exam_details[0].start_time,exam_details[0].end_time)
+    const inv=findInvigilators(exam_id,exam_details[0].exam_date,exam_details[0].subject_id,"67bf275c7daa82a9e8066d5a",exam_details[0].start_time,exam_details[0].end_time)
     for(let i=0;i<n;i++)
     {
         if(used[i]===1)
@@ -174,8 +179,8 @@ const allocateSeats=asyncHandler(async (req,res)=>{
              used[i]=1;
              used[j]=1;
              //console.log(exam_details[i]);
-            allocations.push(await generateSeatingArrangment(exam_details[i].subject_id,studentsFromFirstExam,classroomAllocated,1));
-            allocations.push(await generateSeatingArrangment(exam_details[j].subject_id,studentsFromFirstExam,classroomAllocated,2));
+            allocations.push(await generateSeatingArrangment(exam_id,exam_details[i].exam_dateexam_details[i].start_time,exam_details[i].end_time,exam_details[i].subject_id,studentsFromFirstExam,classroomAllocated,1));
+            allocations.push(await generateSeatingArrangment(exam_id,exam_details[j].exam_dateexam_details[j].start_time,exam_details[j].end_time,exam_details[j].subject_id,studentsFromFirstExam,classroomAllocated,2));
             for(let k=0;k<classroomAllocated.length;i++){
                 const _id=classroomAllocated[k].classroom._id;
                 await Classroom.findOneAndUpdate({_id},{$push:{inUse:{
@@ -214,7 +219,7 @@ const allocateSeats=asyncHandler(async (req,res)=>{
             //     invigilators.push(invigilatorAssigned);
                 
             // }
-            allocations.push(await generateSeatingArrangment(exam_details[i].subject_id,studentsFromFirstExam,classroomAllocated,1));
+            allocations.push(await generateSeatingArrangment(exam_id,exam_details[i].exam_date,exam_details[i].start_time,exam_details[i].end_time,exam_details[i].subject_id,studentsFromFirstExam,classroomAllocated,1));
             used[i]=1;
 
             for(let k=0;k<classroomAllocated.length;k++){

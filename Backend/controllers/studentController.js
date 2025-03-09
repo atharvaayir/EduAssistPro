@@ -7,14 +7,14 @@ const Subject = require("../models/subjectModel");
 // @route   POST /api/students
 // @access  Private (Admin/Authorized users)
 const createStudent = asyncHandler(async (req, res) => {
-    const { name, department, rollno, semester, subjects } = req.body;
+    const { name, email, department, rollno, semester, subjects } = req.body;
 
-    if (!name || !department || !rollno || !semester) {
+    if (!name || !email || !department || !rollno || !semester) {
         res.status(400);
         throw new Error("All required fields must be provided.");
     }
 
-    // Check if department exists
+    // Check if department   exists
     const departmentExists = await Department.findById(department);
     if (!departmentExists) {
         res.status(400);
@@ -44,7 +44,7 @@ const createStudent = asyncHandler(async (req, res) => {
         throw new Error("Roll number already exists.");
     }
 
-    const student = await Student.create({ name, department, rollno, semester, subjects:subjectsArray });
+    const student = await Student.create({ name, email, department, rollno, semester, subjects:subjectsArray });
 
     res.status(201).json({ message: "Student created successfully", student });
 });
