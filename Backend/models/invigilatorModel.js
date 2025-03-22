@@ -15,7 +15,7 @@ const invigilatorSchema = new mongoose.Schema({
     },
     department:{
         type:mongoose.Types.ObjectId,
-        ref:"Subject",
+        ref:"Department",
         required:[true,"Please enter department"]
     },
     assignedExams: [
