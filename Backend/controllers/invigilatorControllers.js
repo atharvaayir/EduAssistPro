@@ -35,4 +35,22 @@ const deleteInvigilator=asyncHandler(async(req,res)=>{
     res.status(200).json({message:"Invigilator successfully deleted"});
 });
 
-module.exports={createInvigilator,getAllInvigilators,deleteInvigilator};
+const authenticateInvigilator=asyncHandler(async(req,res)=>{
+    //console.log("new request");
+    const {email,password}=req.body;
+    if(!email || !password){
+       return res.status(400).json({message:"Input fields are empty"});
+    }
+    const inv=await Invigilator.findOne({email});
+    if(!inv){
+        return res.status(400).json({message:"Authentication failed"});
+    }
+    if(inv.password===password){
+        await inv.populate("department");
+        const {name,email,department,assignedExams}=inv;
+       return res.status(200).json({name,email,department,assignedExams});
+    }
+    
+    return res.status(400).json({message:"Authentication failed"});
+});
+module.exports={createInvigilator,getAllInvigilators,deleteInvigilator,authenticateInvigilator};
