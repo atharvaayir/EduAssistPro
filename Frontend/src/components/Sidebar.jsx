@@ -36,7 +36,7 @@ function Sidebar() {
             <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaClipboardList className="mr-2" /> Exam Management
             </button>
-            <Link to="/seating-arrangement" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+            <Link to="/seating-arrangement  " className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaChalkboard className="mr-2" /> Seating Arrangement
             </Link>
             <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">

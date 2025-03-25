@@ -1,11 +1,12 @@
 import { FaSignOutAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 function Navbar({ adminName,setIsAuthenticated }) {
   return (
     <nav className="bg-blue-600 text-white px-4 py-3 flex items-center justify-between">
       {/* Left: Logo */}
-      <div className="text-2xl font-bold">
+      <Link to="/" className="text-2xl font-bold">
         EduAssistPro
-      </div>
+      </Link>
 
       {/* Center: Admin Name */}
       <div className="text-xl font-medium">
