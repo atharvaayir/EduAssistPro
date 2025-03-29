@@ -11,9 +11,7 @@ const StudentInput = () => {
 
   return (
     <div className="flex">
-      <Sidebar />
       <div className="flex-1">
-        <Navbar />
         <div className="container mx-auto p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold">Student Input</h1>

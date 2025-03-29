@@ -269,14 +269,14 @@ const generateSeatingArrangement = async (req,res) => {
               sub_id: 3,
               students: 40,
             },
-            {
-              sub_id: 4,
-              students: 30,
-            },
-            {
-              sub_id: 5,
-              students: 30,
-            },
+            // {
+            //   sub_id: 4,
+            //   students: 30,
+            // },
+            // {
+            //   sub_id: 5,
+            //   students: 30,
+            // },
           ],
         },
         {
@@ -296,7 +296,7 @@ const generateSeatingArrangement = async (req,res) => {
           name: "CR 1",
           rows: 10,
           cols: 4,
-          benchCapacity: 3,
+          benchCapacity: 2,
         },
         {
           name: "CR 2",
