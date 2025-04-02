@@ -1,6 +1,16 @@
 const { mongoose } = require("mongoose");
 const classroomModel = require("../models/classroomModel");
 
+const getClassroomsHandler = async (req, res) => {
+  const classrooms = await classroomModel.find({},{
+    _id:1,
+    name:1,
+    rows:1,
+    columns:1,
+    benchCapacity:1
+  });
+  return res.status(200).json(classrooms);
+};
 const allClassroomsHandler = async (req, res) => {
   const classrooms = await classroomModel.find({});
   return res.status(200).json(classrooms);
@@ -92,4 +102,4 @@ const singleClassroomDetailsHandler = async(req,res)=>{
     return res.status(200).json(result);
 };
 
-module.exports = { allClassroomsHandler, createClassroomHandler, deleteClassroomHandler, updateClassroomHandler, singleClassroomDetailsHandler };
+module.exports = { getClassroomsHandler, allClassroomsHandler, createClassroomHandler, deleteClassroomHandler, updateClassroomHandler, singleClassroomDetailsHandler };

@@ -1,51 +1,18 @@
 // Frontend/src/components/MainContent.jsx
-import React from 'react';
-import { Link } from 'react-router-dom';
-import StatisticsBox from './StatisticsBox';
-import UpcomingExams from './UpcomingExams';
-
-function MainContent() {
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import ErrorPage from "../pages/ErrorPage";
+import CreateClassroom from "../pages/classroom/CreateClassroom";
+import ClassroomObjects from "../pages/classroom/ClassroomObjects";
+import UpdateClassroom from "../pages/classroom/UpdateClassroom";
+import Blocks from "../pages/Blocks";
+import StudentInput from "../pages/StudentInput"; // Import the new page
+import NewExam from "../pages/exam/NewExam";
+import SeatingArrangement from "../pages/SeatingArrangement";
+import Dashboard from "./Dashboard";
+function MainContent({username,isAuthenticated,setIsAuthenticated}) {
   return (
-    <div className="flex-1 bg-gray-100 p-6 overflow-auto">
-      {/* Statistics Box */}
-      <div className="mb-6">
-        <StatisticsBox />
-      </div>
-
-      {/* Upcoming Exams */}
-      <div className="mb-6">
-        <UpcomingExams />
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        <Link 
-          to="/student-input"
-          className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
-        >
-          <button>
-            Student Data
-          </button>
-        </Link>
-        <Link 
-          to="/classrooms"
-          className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
-        >
-          <button className="">
-            Classroom Data
-          </button>
-        </Link>
-        <Link
-          to="/new-exam"
-          className='bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50'
-        >
-            New Exam
-        </Link>
-        <button className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50">
-          Queries
-        </button>
-      </div>
-    </div>
+    <></>
   );
 }
 

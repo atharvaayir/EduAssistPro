@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
-const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, onChange }) => {
+const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, valueUpdateFunction }) => {
     const [number, setNumber] = useState(value);
 
     const handleIncrement = (e) => {
         e.preventDefault();
         if (number < max) {
             setNumber(prev => prev + step);
-            onChange && onChange(number + step);
+            onChange && valueUpdateFunction(number + step);
         }
     };
 
@@ -16,7 +16,7 @@ const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, onChan
         e.preventDefault();
         if (number > min) {
             setNumber(prev => prev - step);
-            onChange && onChange(number - step);
+            onChange && valueUpdateFunction(number - step);
         }
     };
 
@@ -24,7 +24,7 @@ const NumberInput = ({ name,ref ,value = 1, min = 1, max = 100, step = 1, onChan
         let newValue = parseInt(e.target.value, 10);
         if (!isNaN(newValue) && newValue >= min && newValue <= max) {
             setNumber(newValue);
-            onChange && onChange(newValue);
+            onChange && valueUpdateFunction(newValue);
         }
     };
 
