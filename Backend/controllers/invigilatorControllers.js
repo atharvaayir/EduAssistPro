@@ -36,7 +36,7 @@ const deleteInvigilator=asyncHandler(async(req,res)=>{
 });
 
 const authenticateInvigilator=asyncHandler(async(req,res)=>{
-    //console.log("new request");
+    console.log("new request");
     const {email,password}=req.body;
     if(!email || !password){
        return res.status(400).json({message:"Input fields are empty"});
