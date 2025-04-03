@@ -26,7 +26,7 @@ const createSubject = asyncHandler(async (req, res) => {
     }
 
     const subject = await Subject.create({ name, department, code, semester });
-    res.status(201).json(subject);
+    res.status(201).json({subject:subject,message:"Object Created"});
 });
 
 // Get all subjects
@@ -84,7 +84,7 @@ const updateSubject = asyncHandler(async (req, res) => {
     subject.semester = semester;
 
     const updatedSubject = await subject.save();
-    res.status(200).json(updatedSubject);
+    res.status(200).json({updatedSubject,message:"Subject Updated"});
 });
 
 // Delete a subject

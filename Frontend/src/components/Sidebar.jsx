@@ -1,8 +1,10 @@
 // src/components/Sidebar.js
 import React, { useState } from 'react';
-import { FaUser, FaClipboardList, FaChalkboard, FaFilePdf, FaMailBulk, FaChartBar, FaHome } from 'react-icons/fa';
+import { FaUser, FaClipboardList, FaChalkboard, FaFilePdf, FaMailBulk, FaChartBar, FaHome, FaCube, FaPlus } from 'react-icons/fa';
+import { PiBooks } from "react-icons/pi";
 import { Link } from 'react-router-dom';
 import { Menu } from 'lucide-react';
+import { IoPeople } from "react-icons/io5";
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,23 +33,29 @@ function Sidebar() {
             <Link to="/" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaHome className="mr-2" />  {!collapsed && ("Home")}
             </Link>
-            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
-              <FaUser className="mr-2" />  {!collapsed && ("Profile")}
-            </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
-              <FaClipboardList className="mr-2" />  {!collapsed && ("Exam Management")}
-            </button>
+            <Link to="/new-exam" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+              <FaPlus className="mr-2" />  {!collapsed && ("New Exam")}
+            </Link>
+            <Link to="/classrooms" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+              <FaCube className="mr-2" />  {!collapsed && ("Classrooms")}
+            </Link>
             <Link to="/seating-arrangement  " className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaChalkboard className="mr-2" />  {!collapsed && ("Seating Arrangement")}
             </Link>
-            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
-              <FaFilePdf className="mr-2" />  {!collapsed && ("PDF Generation")}
-            </button>
-            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+            <Link to="/subjects" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+              <PiBooks className="mr-2 size-5" />  {!collapsed && ("Subjects")}
+            </Link>
+            <Link to="/student-input" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+              <IoPeople className="mr-2 size-5" />  {!collapsed && ("Students")}
+            </Link>
+            {/* <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaMailBulk className="mr-2" />  {!collapsed && ("Mailing")}
-            </button>
+            </button> */}
             <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaChartBar className="mr-2" />  {!collapsed && ("Reports")}
+            </button>
+            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+              <FaUser className="mr-2" />  {!collapsed && ("Profile")}
             </button>
           </div>
         

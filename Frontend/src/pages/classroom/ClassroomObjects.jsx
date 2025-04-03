@@ -6,25 +6,6 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 
-// const objs = [
-//   {
-//     title: "Semester Object",
-//     capacity: 660,
-//   },
-//   {
-//     title: "Computer Dept ITs Object",
-//     capacity: 160,
-//   },
-//   {
-//     title: "Mechanical Dept ITs Object",
-//     capacity: 180,
-//   },
-//   {
-//     title: "CiVil Dept ITs Object",
-//     capacity: 170,
-//   },
-// ];
-
 const ClassroomObjects = () => {
   const { classrooms, getClassrooms, deleteClassroom } = useClassroomStore();
   const navigate = useNavigate();
@@ -164,7 +145,7 @@ const ClassroomObjects = () => {
       {/* modal for delete operation */}
       <dialog id="deleteModal" className="modal">
         <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-lg">Hello!</h3>
+          <h3 className="font-bold text-lg">Confirmation</h3>
           <p className="py-4">
             Are you sure you want to delete "{deleteName}" Classroom?
           </p>

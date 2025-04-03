@@ -15,6 +15,10 @@ import StudentInput from "./pages/StudentInput";
 import ErrorPage from "./pages/ErrorPage";
 import NewExam from "./pages/exam/NewExam";
 import SeatingArrangement from "./pages/SeatingArrangement";
+import Subjects from "./pages/subjects/Subjects";
+import UpdateSubject from "./pages/subjects/UpdateSubject";
+import NewSubject from "./pages/subjects/newSubject";
+
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -65,7 +69,10 @@ const App = () => {
                 <Route exact path="/blocks" element={<Blocks />} />
                 <Route exact path="/student-input" element={<StudentInput />} />{" "}
                 <Route exact path="/seating-arrangement" element={<SeatingArrangement />} />{" "}
-                <Route exact path="/new-exam" element={isAuthenticated ? <NewExam /> : <Navigate to="/login" />} />
+                <Route exact path="/new-exam" element= { <NewExam /> } />
+                <Route exact path="/subjects" element= { <Subjects /> } />
+                <Route exact path="/update-subject" element= { <UpdateSubject /> } />
+                <Route exact path="/new-subject" element= { <NewSubject /> } />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               </div>

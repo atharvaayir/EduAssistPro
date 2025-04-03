@@ -4,7 +4,8 @@ import toast from "react-hot-toast";
 
 export const useExamStore = create((set,get)=>({
     classrooms:[],
-    currentStage:1,
+    subjects:[],
+    currentStage:0,
     setStage:(nos)=>{
         const {currentStage} = get();
         set({
@@ -25,4 +26,16 @@ export const useExamStore = create((set,get)=>({
             set({isLoading:false});
         }
     },
+    getSubjects:async ()=>{
+        try {
+            const res = await axiosInstance.get("/subjects");
+            set({subjects:res.data});
+            console.log(res.data);
+        } catch (error) {
+            toast.error(error)
+        }
+    },
+    seatingArrangementBackendCall:async()=>{
+        
+    }
 }));
