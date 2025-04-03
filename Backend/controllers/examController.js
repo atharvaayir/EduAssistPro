@@ -98,11 +98,17 @@ const deleteExam = asyncHandler(async (req, res) => {
     res.status(200).json({ message: 'Exam deleted successfully' });
 });
 
+const examCountHandler = asyncHandler(async (req,res) => {
+    const count = await Exam.countDocuments({});
+    return res.status(200).json({count});
+});
+
 // Export all functions as default
 module.exports= {
     createExam,
     getAllExams,
     getExamById,
     updateExam,
-    deleteExam
+    deleteExam,
+    examCountHandler
 };

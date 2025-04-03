@@ -548,23 +548,6 @@ const NewExam = () => {
                 </div>
                 </div>
             </dialog>
-            {/* 
-            
-                [
-                    {
-                        "subject": "67ece4e4fd7965f808ff5907",
-                        "date": "2025-04-02",
-                        "startTime": "09:00",
-                        "endTime": "10:00"
-                    },
-                    {
-                        "subject": "67ece4e4fd7965f808ff5908",
-                        "date": "",
-                        "startTime": "04:09",
-                        "endTime": "04:09"
-                    }
-                ]
-            */}
         </  >
     );
 };

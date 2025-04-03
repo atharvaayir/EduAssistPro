@@ -4,30 +4,55 @@ const qr = require("qrcode");
 const fs = require("fs");
 const { renderAndGenPdf, genPdf } = require("../utils/pdfGeneration.js");
 const { renderEjs } = require("../utils/renderEjs.js");
+const studentModel = require("../models/studentModel.js");
 
 const admitCardHandler = async (req, res) => {
   try {
+
     // user image
-    const imagePath = path.join(__dirname, "../public/images/user_image.jpg");
+    const imagePath = path.join(__dirname, "../public/images/standard_user_image.jpg");
     const imageBase64 = fs.readFileSync(imagePath, "base64");
 
     // qr image
     const qrString = "9kxpzWiciusKyzDWtVZFbC97E40riCUc4WMnuQlj"; // Your dynamic data
     const qrCodeBase64 = await qr.toDataURL(qrString);
 
+    const studentData = await studentModel.findById("67ecfc97fd7965f808ff5962")
+    .populate("department", "name")
+    .populate("subjects", "name code");
+    
+    
+    
+    // const reportData = {
+    //   name: "John Doe",
+    //   course: "Computer Engineering",
+    //   semester: "5th",
+    //   branch: "Computer Engineering Department",
+    //   seatNumber: "12345",
+    //   userImage: `data:image/png;base64,${imageBase64}`,
+    //   qrImage: qrCodeBase64,
+    //   papers: [
+    //     { code: "CSE101", date: "2024-12-01", name: "Operating Systems" },
+    //     { code: "CSE102", date: "2024-12-05", name: "Database Management" },
+    //   ],
+    // };
     const reportData = {
-      name: "John Doe",
-      course: "Computer Engineering",
-      semester: "5th",
-      branch: "Computer Engineering Department",
-      seatNumber: "12345",
+      name: studentData.name,
+      course: "Bachelor of Engineering", // Assuming course is department name + "Engineering"
+      semester: studentData.semester, // Adding "th" to semester
+      branch: studentData.department.name + " Department", // Assuming branch is department name + "Department"
+      seatNumber: studentData.rollno,
       userImage: `data:image/png;base64,${imageBase64}`,
       qrImage: qrCodeBase64,
-      papers: [
-        { code: "CSE101", date: "2024-12-01", name: "Operating Systems" },
-        { code: "CSE102", date: "2024-12-05", name: "Database Management" },
-      ],
+      papers: studentData.subjects.map((subject) => ({
+        code: subject.code,
+        date: "2024-12-01", // Or whatever date you want
+        name: subject.name,
+      })),
     };
+
+    console.log(reportData);
+
     const file = await renderAndGenPdf("report.ejs", reportData);
 
     // Generate PDF
@@ -48,7 +73,7 @@ const sheetQrHandler = async (req, res) => {
     const { quantity, start } = req.body;
     for (let i = 0; i < quantity; i++)
       data[Number(start) + i] = await qr.toDataURL(`${Number(start) + i}`);
-
+    
     const file = await renderAndGenPdf("qrSheets.ejs", { data });
 
     res.setHeader("Content-Type", "application/pdf");

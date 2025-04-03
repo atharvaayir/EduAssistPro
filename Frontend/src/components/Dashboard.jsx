@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import StatisticsBox from "./StatisticsBox";
 import UpcomingExams from "./UpcomingExams";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import { axiosInstance } from "../lib/axios";
 
-const Dashboard = ({ username, setIsAuthenticated }) => {
-  const toastShown = useRef(false); // Keeps track of whether the toast has been shown
+const Dashboard = ({ username }) => {
+  const toastShown = useRef(false);
 
   useEffect(() => {
     if (!toastShown.current) {
@@ -13,6 +14,7 @@ const Dashboard = ({ username, setIsAuthenticated }) => {
       toastShown.current = true;
     }
   }, []);
+
   return (
     <>
       {/* Statistics Box */}
@@ -37,7 +39,7 @@ const Dashboard = ({ username, setIsAuthenticated }) => {
           to="/classrooms"
           className="bg-white shadow rounded p-4 flex items-center justify-center hover:bg-blue-50"
         >
-          <button className="">Classroom Data</button>
+          <button>Classroom Data</button>
         </Link>
         <Link
           to="/new-exam"
@@ -50,7 +52,6 @@ const Dashboard = ({ username, setIsAuthenticated }) => {
         </button>
       </div>
     </>
-
   );
 };
 

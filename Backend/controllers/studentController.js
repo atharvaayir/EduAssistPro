@@ -171,6 +171,10 @@ const importStudentsFromExcel = asyncHandler(async (req, res) => {
   res.status(201).json({ message: "Students imported successfully", students });
 });
 
+const studentCountHandler = asyncHandler(async (req,res) => {
+    const count = await Student.countDocuments({});
+    return res.status(200).json({count});
+});
 
 
 module.exports = {
@@ -179,5 +183,6 @@ module.exports = {
   getStudentById,
   updateStudent,
   deleteStudent,
-  importStudentsFromExcel
+  importStudentsFromExcel,
+  studentCountHandler
 };

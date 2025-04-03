@@ -18,6 +18,7 @@ import SeatingArrangement from "./pages/SeatingArrangement";
 import Subjects from "./pages/subjects/Subjects";
 import UpdateSubject from "./pages/subjects/UpdateSubject";
 import NewSubject from "./pages/subjects/newSubject";
+import Reports from "./pages/reports";
 
 
 const App = () => {
@@ -73,6 +74,7 @@ const App = () => {
                 <Route exact path="/subjects" element= { <Subjects /> } />
                 <Route exact path="/update-subject" element= { <UpdateSubject /> } />
                 <Route exact path="/new-subject" element= { <NewSubject /> } />
+                <Route exact path="/reports" element= { <Reports /> } />
                 <Route path="*" element={<ErrorPage />} />
               </Routes>
               </div>

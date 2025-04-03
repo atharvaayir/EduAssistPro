@@ -51,9 +51,9 @@ function Sidebar() {
             {/* <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaMailBulk className="mr-2" />  {!collapsed && ("Mailing")}
             </button> */}
-            <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
+            <Link to="/reports" className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaChartBar className="mr-2" />  {!collapsed && ("Reports")}
-            </button>
+            </Link>
             <button className="w-full text-left px-4 py-2 hover:bg-gray-700 flex items-center">
               <FaUser className="mr-2" />  {!collapsed && ("Profile")}
             </button>
