@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import PageHeader from '../components/PageHeader'
 import { useReportStore } from '../store/useReportStore';
 import { FaDownload, FaQrcode, FaRegAddressCard } from 'react-icons/fa';
+import { MdCoPresent } from "react-icons/md";
 
 const Reports = () => {
     const [startNumber, setStartNumber] = useState('');
     const [numberOfQRCodes, setNumberOfQRCodes] = useState('');
-    const { ansSheetQRCodeGenHandler, sampleAdmitCardGenerator } = useReportStore();
+    const { ansSheetQRCodeGenHandler, sampleAdmitCardGenerator, sampleAttendanceSheetGenerator } = useReportStore();
 
   return (
     <>
@@ -28,7 +29,7 @@ const Reports = () => {
                     </div>
                 </form>
                 <button type='button' onClick={()=>ansSheetQRCodeGenHandler(startNumber,numberOfQRCodes)} className='btn btn-primary mx-auto'> 
-                    <FaDownload />Generate QR Codes
+                    <FaDownload />QR Codes
                 </button>
             </div>
 
@@ -39,7 +40,18 @@ const Reports = () => {
                     Sample Admit Card <FaRegAddressCard className='size-10'/>
                 </h1>
                 <button type='button' onClick={sampleAdmitCardGenerator} className='btn btn-primary mx-auto'>
-                    <FaDownload /> Generate Sample Admit Card
+                    <FaDownload /> Sample Admit Card
+                </button>
+            </div>
+
+
+            {/* sample attendance sheet */}
+            <div className='p-6 bg-white shadow-md rounded-lg mb-5 w-fit grid gap-4 h-fit'>
+                <h1 className='font-semibold text-center text-xl flex gap-5 items-center mx-auto'>
+                    Sample Attendance Sheet <MdCoPresent className='size-10'/>
+                </h1>
+                <button type='button' onClick={sampleAttendanceSheetGenerator} className='btn btn-primary mx-auto'>
+                    <FaDownload /> Sample Attendance Sheet
                 </button>
             </div>
         </div>

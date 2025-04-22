@@ -6,6 +6,4 @@ const {scheduleEmails}=require('../controllers/mailControllers');
 router.post('/sendmailtostudents',scheduleEmails);
 
 
-
-
 module.exports=router;

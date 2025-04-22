@@ -14,7 +14,7 @@ const createInvigilator=asyncHandler(async (req, res) => {
 });
 
 const getAllInvigilators = asyncHandler(async (req, res) => {
-    const invigilators = await Invigilator.find();
+    const invigilators = await Invigilator.find().populate("department","name");
     res.status(200).json(invigilators);
 });
 

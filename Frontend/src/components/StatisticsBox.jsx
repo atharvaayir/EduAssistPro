@@ -1,6 +1,7 @@
 // src/components/StatisticsBox.js
 import React, { useEffect, useState } from 'react';
 import { axiosInstance } from '../lib/axios';
+import toast from 'react-hot-toast';
 
 function StatisticsBox() {
   const [studentCount, setStudentCount] = useState(0); 

@@ -6,6 +6,8 @@ const Invigilator=require('../models/invigilatorModel')
 const asyncHandler=require('express-async-handler');
 
 const seatingArrangement  = require("../utils/seatingArrangementClass.js");
+const studentModel = require('../models/studentModel');
+const subjectModel = require('../models/subjectModel.js');
 
 const getStudentAnsweringExam=async(subject_check)=>{
     try {
@@ -251,68 +253,118 @@ const allocateSeats=asyncHandler(async (req,res)=>{
 });
 
 const generateSeatingArrangement = async (req,res) => {
-    const data = [
-        {
-        name: "slot 1",
-          start: "Feb5 10:00AM",
-          end: "Feb5 01:00PM",
-          subjects: [
-            {
-              sub_id: 1,
-              students: 40,
-            },
-            {
-              sub_id: 2,
-              students: 40,
-            },
-            {
-              sub_id: 3,
-              students: 40,
-            },
-            // {
-            //   sub_id: 4,
-            //   students: 30,
-            // },
-            // {
-            //   sub_id: 5,
-            //   students: 30,
-            // },
-          ],
-        },
-        {
-          name: "slot 2",
-          start: "Feb6 10:00AM",
-          end: "Feb6 01:00PM",
-          subjects: [
-            {
-              sub_id: 1,
-              students: 60,
-            },
-          ],
-        },
-    ];
-    const classRooms = [
-        {
-          name: "CR 1",
-          rows: 10,
-          cols: 4,
-          benchCapacity: 2,
-        },
-        {
-          name: "CR 2",
-          rows: 10,
-          cols: 4,
-          benchCapacity: 2,
-        },
-        {
-          name: "CR 3",
-          rows: 10,
-          cols: 4,
-          benchCapacity: 2,
-        },
-    ];
-    const strictnessLevel = 2;
-    let seatAllocation = new seatingArrangement(data,classRooms,strictnessLevel);
+    // const data = [
+    //     {
+    //     name: "slot 1",
+    //       start: "Feb5 10:00AM",
+    //       end: "Feb5 01:00PM",
+    //       subjects: [
+    //         {
+    //           sub_id: 1,
+    //           students: 40,
+    //         },
+    //         {
+    //           sub_id: 2,
+    //           students: 40,
+    //         },
+    //         {
+    //           sub_id: 3,
+    //           students: 40,
+    //         },
+    //         // {
+    //         //   sub_id: 4,
+    //         //   students: 30,
+    //         // },
+    //         // {
+    //         //   sub_id: 5,
+    //         //   students: 30,
+    //         // },
+    //       ],
+    //     },
+    //     {
+    //       name: "slot 2",
+    //       start: "Feb6 10:00AM",
+    //       end: "Feb6 01:00PM",
+    //       subjects: [
+    //         {
+    //           sub_id: 1,
+    //           students: 60,
+    //         },
+    //       ],
+    //     },
+    // ];
+    // const classRooms = [
+    //     {
+    //       name: "CR 1",
+    //       rows: 10,
+    //       cols: 4,
+    //       benchCapacity: 2,
+    //     },
+    //     {
+    //       name: "CR 2",
+    //       rows: 10,
+    //       cols: 4,
+    //       benchCapacity: 2,
+    //     },
+    //     {
+    //       name: "CR 3",
+    //       rows: 10,
+    //       cols: 4,
+    //       benchCapacity: 2,
+    //     },
+    // ];
+    
+    const {timetable,selectedClassrooms,seatingArrangementSelectedChoice} = req.body;
+    // console.log(timetable,selectedClassrooms,seatingArrangementSelectedChoice);
+    const strictnessLevel = seatingArrangementSelectedChoice==="choice1"?1:2;
+
+    const subjectCounts = new Map(
+      await Promise.all(
+        timetable.map(async (sub) => {
+          const stud_count = await studentModel.countDocuments({
+            "subjects": sub.subjectId
+          });
+          const sub_name = await subjectModel.findById(sub.subjectId);
+          console.log(sub_name.name);
+          
+          return [sub.subjectId, [stud_count,sub_name.name]]; // Returning an array as [key, value] for Map
+        })
+      )
+    );
+    
+    const groupedTimetable = Object.values(
+        timetable.reduce((acc, item) => {
+          const key = `${item.sub_date}-${item.sub_starttime}`;
+          if (!acc[key]) {
+            acc[key] = {
+              name:`${item.sub_date}-${item.sub_starttime}`,
+              date: item.sub_date,
+              start: item.sub_starttime,
+              end: item.sub_endtime,
+              subjects: [],
+            };
+          }
+          acc[key].subjects.push({
+            // sub_id: count,
+            sub_id: subjectCounts.get(item.subjectId)[1],
+            students:subjectCounts.get(item.subjectId)[0]
+          });
+          return acc;
+        }, {})
+    );
+
+    const transformedSelectedClassrooms = selectedClassrooms.map((cr) => ({
+      name: cr.name,
+      rows: cr.rows,
+      cols: cr.columns, // Renamed 'columns' to 'cols'
+      benchCapacity: cr.benchCapacity,
+    }));
+    
+
+    console.log(...groupedTimetable,transformedSelectedClassrooms,strictnessLevel);
+    
+  
+    let seatAllocation = new seatingArrangement(groupedTimetable,transformedSelectedClassrooms ,strictnessLevel);
 
     let a = seatAllocation.seatAlloc();
     res.send(a);

@@ -161,6 +161,8 @@ class seatingArrangement {
                         throw new Error("Available classroom capacity is falling short for the chosen seating arrangement");
                     }
                     for(let i = 0; i < students; i++){
+                        // console.log("this is here");
+                        // console.log(this.result,slot['name'],current[0],current[1],current[2]);
                         
                         this.result[slot['name']][current[0]]['arrangement'][current[1]][current[2]] = subId;
                         
