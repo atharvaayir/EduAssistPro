@@ -1,5 +1,4 @@
 const path = require("path");
-const pdf = require("html-pdf");
 const qr = require("qrcode");
 const fs = require("fs");
 const { renderAndGenPdf, genPdf } = require("../utils/pdfGeneration.js");

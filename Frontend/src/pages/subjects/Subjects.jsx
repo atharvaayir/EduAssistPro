@@ -38,8 +38,8 @@ const Subjects = () => {
   return (
     <>
       <PageHeader heading="Subjects" action={action} />
-      <div className="overflow-x-auto">
-        <table className="table ">
+      <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white/60 shadow-lg shadow-black/20">
+        <table className="table">
           <thead>
             <tr className="bg-gray-100">
               <th className="p-3 border">Code</th>

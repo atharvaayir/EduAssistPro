@@ -11,7 +11,7 @@ const Reports = () => {
 
   return (
     <>
-        <PageHeader heading="Reports" />
+        {/* <PageHeader heading="Reports" /> */}
         <div className='container flex flex-wrap gap-5'>
 
             

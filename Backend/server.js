@@ -54,6 +54,7 @@ app.use('/api/examtimetables',require('./routes/examTimeTableroutes'));//
 app.use('/api/invigilators',require('./routes/invigilatorRoutes'));
 app.use('/api/seatallocation',require('./routes/seatAllocationRoutes'));//
 app.use('/api/mail',require('./routes/mailRoutes'));
+app.use('/api/image',require('./routes/image.routes'));
 app.use(errorHandler);
 
 // app route to test incoming feature

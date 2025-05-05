@@ -8,12 +8,15 @@ const Login = ({status}) => {
     return (
     <div className="flex h-screen">
       <Inputbox />
-      <img
-        width="50%"
-        src="bg.jpg"
-        alt=""
-        className="aspect-square"
-      />
+      <div className="w-1/2 aspect-square h-full relative">
+
+        <img
+          src="bg.jpg"
+          alt=""
+          className="h-full as shadow-inner shadow-black"
+        />
+        <div className="w-full h-full absolute top-0 shadow-[inset_-8px_-8px_80px_#000000f0]" />
+      </div>
     </div>
   )
 }

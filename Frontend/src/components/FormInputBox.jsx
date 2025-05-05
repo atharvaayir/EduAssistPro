@@ -2,7 +2,7 @@ import React from 'react'
 
 const FormInputBox = ({children}) => {
   return (
-    <div className='p-6 bg-white shadow-md rounded-lg mb-5 border-2 border-black/40'>
+    <div className='p-6 mb-5 overflow-x-auto rounded-box border border-base-content/5 bg-white/90 shadow-lg shadow-black/20'>
         {children}
     </div>
   )

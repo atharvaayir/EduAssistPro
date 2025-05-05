@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Student = require("../models/studentModel");
 const Department = require("../models/departmentModel");
 const Subject = require("../models/subjectModel");
+const mongoose = require('mongoose');
 
 // @desc    Create a new student
 // @route   POST /api/students
@@ -53,11 +54,42 @@ const createStudent = asyncHandler(async (req, res) => {
 // @route   GET /api/students
 // @access  Public
 const getAllStudents = asyncHandler(async (req, res) => {
+    
     const students = await Student.find()
         .populate("department", "name")
-        .populate("subjects", "name subjectCode");
-
+        .populate("subjects", "name code");
     res.status(200).json(students);
+});
+
+const getStudents = asyncHandler(async (req,res) => {
+    const {department,semester} = req.body;
+    console.log(req.body);
+    
+    if(!department || !semester){
+        return res.status(400).send("All input fields are required");
+    }
+
+    const departmentId = {
+        "civ": "67bb42bce4224158c91ba808",
+        "comp": "67bb4144262d645baf554321",
+        "it": "67bb413d262d645baf55431e",
+        "mech": "67ba17c22f6ed0b84cc256bd",
+        "ee": "67bb4292e4224158c91ba801",
+        "etc": "67bb428be4224158c91ba7fe",
+        "vlsi": "67bb4295e4224158c91ba804",
+    }[department]
+    const students = await Student.find({
+        'department': new mongoose.Types.ObjectId(departmentId), 
+        'semester': semester
+      }).populate("department", "name").populate("subjects", "name code");
+      if(students){
+          if(students.length>0)
+          return res.status(200).json({students,message:"success"}); 
+          else
+          return res.status(200).json({message:"No Student Found"}); 
+
+        }
+    return res.status(400).json({message:"error in student fetching"}); 
 });
 
 // @desc    Get student by ID
@@ -176,10 +208,10 @@ const studentCountHandler = asyncHandler(async (req,res) => {
     return res.status(200).json({count});
 });
 
-
 module.exports = {
   createStudent,
   getAllStudents,
+  getStudents,
   getStudentById,
   updateStudent,
   deleteStudent,

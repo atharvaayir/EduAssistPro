@@ -6,10 +6,12 @@ const {
     getStudentById,
     updateStudent,
     deleteStudent,
-    studentCountHandler
+    studentCountHandler,
+    getStudents,
 } = require("../controllers/studentController");
 
 router.get("/", getAllStudents); // Get all students
+router.post("/", getStudents); // Get all students
 router.post("/create", createStudent); // Create a student
 router.delete("/delete/:id", deleteStudent); // Delete a student
 router.patch("/update/:id", updateStudent); // Update a student

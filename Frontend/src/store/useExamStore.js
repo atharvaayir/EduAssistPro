@@ -17,11 +17,11 @@ export const useExamStore = create((set,get)=>({
         set({isLoading:false});
         toast.success("All data loaded successfully");
     },
-    setStage:(nos)=>{
+    setStage:(nos,relative)=>{
         const {currentStage} = get();
         set({
             ...get(),
-            currentStage:nos+currentStage
+            currentStage:relative ? nos+currentStage : nos
         })
     },
     getClassrooms: async () => {

@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
 import StudentGroupForm from '../components/StudentGroupForm';
 import StudentGroupTable from '../components/StudentGroupTable';
 import { FaHome, FaPlus } from 'react-icons/fa';
@@ -33,12 +31,12 @@ const StudentInput = () => {
     <div className="flex">
       <div className="flex-1">
         <div className="container mx-auto p-6">
-          <div className="flex justify-between items-center mb-6">
+          {/* <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold">Student Display</h1>
             <Link to="/" className="btn btn-primary flex items-center">
               <FaHome className="mr-2" /> Home
             </Link>
-          </div>
+          </div> */}
 
           <div className="grid gap-4">
             {semesters.map((sem) => (
