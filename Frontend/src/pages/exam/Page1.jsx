@@ -1,22 +1,34 @@
 import React, { useState } from "react";
 import FormInputBox from "../../components/FormInputBox";
-import { Pencil, Plus, PlusIcon, Trash } from "lucide-react";
+import { Pencil, Plus, Trash } from "lucide-react";
 import toast from "react-hot-toast";
-import DislogInput from "./DislogInput";
+import { FaPlus } from "react-icons/fa";
+import DialogBig from "./DialogBig";
+import DialogSmall from "./DialogSmall";
 
-let Page1dialogs;
-
-const Page1 = ({
-  currentStage,
-  examName,
-  setExamName,
-  groups,
-  subjects,
+const Page1dialogs = ({
+  selectedGroupIndex,
+  setSelectedGroupIndex,
+  editGroupName,
+  setEditGroupName,
+  groups, 
   setGroups,
-}) => {
-  const [selectedGroupIndex, setSelectedGroupIndex] = useState(null);
+  subjects
+})=>{
   const [groupName, setGroupName] = useState("");
-  const [editGroupName, setEditGroupName] = useState("");
+
+  // check if subject is already chosen
+  const safeSubject = (subject) => {
+    const inputSubjectId = subject._id;
+    console.log(groups);
+    console.log(subject);
+    if (groups.some((group) => group.subjects.some(subject => subject._id === inputSubjectId))) {
+      console.log('bruh');
+      
+      return false;
+    }
+    return true;
+  };
   const safeGroupName = (name) => {
     setGroupName(name.trim());
     if (!name) {
@@ -39,11 +51,6 @@ const Page1 = ({
     }
     return true;
   };
-  // handle exam group creation
-  const createGroup = (e) => {
-    e.preventDefault();
-    document.getElementById("create-exam-group-modal").showModal();
-  };
   // handle subject group confirmation
   const confirmSubjectGroup = () => {
     if (!safeGroupName(groupName)) return;
@@ -54,13 +61,6 @@ const Page1 = ({
     // toast.success("Group created successfully");
     console.log(groups);
   };
-  // handle Subject Group name Edit
-  const handleSubjectGroupEdit = (e, index) => {
-    e.preventDefault();
-    setEditGroupName(groups[index].name);
-    document.getElementById("edit-exam-group-modal").showModal();
-    setSelectedGroupIndex(index);
-  };
   const confirmSubjectGroupEdit = () => {
     if (!safeGroupName(editGroupName)) return;
     setGroups((prevGroups) => {
@@ -68,26 +68,10 @@ const Page1 = ({
         index === selectedGroupIndex ? { ...group, name: editGroupName } : group
       );
     });
-
     setGroupName("");
+    document.getElementById("edit-exam-group-modal").close();
   };
-  // check if subject is already chosen
-  const safeSubject = (subject) => {
-    if (groups.some((group) => group.subjects.includes(subject))) {
-      console.log("bruh");
-
-      return false;
-    }
-    return true;
-  };
-  // handle add subject button
-  const addSubjectModalHandle = (e, index) => {
-    e.preventDefault();
-    document.getElementById("subjects-display-modal").showModal();
-    setSelectedGroupIndex(index);
-  };
-  const handleSelectSubject = (e, subject) => {
-    e.preventDefault();
+  const handleSelectSubject = (subject) => {
     if (!safeSubject(subject)) {
       toast.error("Subject already chosen");
       return;
@@ -100,89 +84,179 @@ const Page1 = ({
       );
     });
   };
-  const handleGroupDelete = (e, index) => {
-    e.preventDefault();
-    setSelectedGroupIndex(index);
-    document.getElementById("delete-exam-group-modal").showModal();
-  };
   const confirmSubjectGroupDelete = (e) => {
     // e.preventDefault();
     setGroups((prevGroups) =>
       prevGroups.filter((group, index) => index !== selectedGroupIndex)
     );
     setSelectedGroupIndex(null);
+    document.getElementById("delete-exam-group-modal").close();
   };
-
-  Page1dialogs = (
+  return (
     <>
-      <dialog id="subjects-display-modal" className="modal">
-        <div className="modal-box w-11/12 max-w-5xl">
-          <h3 className="font-bold text-xl mb-4">Select Subject</h3>
-          {/* Classroom Buttons Grid (Scrollable) */}
-          <div className="p-4 grid grid-cols-2 gap-3 max-h-[20rem] overflow-auto">
+      <DialogBig
+        id="subjects-display-modal"
+        title="Select Subject"
+        content={() => (
+          <>
             {subjects.map((subject) => (
               <button
+                type="button"
                 key={subject._id}
-                onClick={(e) => handleSelectSubject(e, subject)}
-                className="btn h-fit py-4"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSelectSubject(subject);
+                }}
+                className={`btn h-fit py-4`}
               >
                 <p className="text-2xl truncate w-full">{subject.name}</p>
                 <p className="text-md">Code: {subject.code}</p>
               </button>
             ))}
+          </>
+        )}
+        buttons={() => (
+          <>
+            <button
+              onClick={e=>{
+                e.preventDefault();
+                document.getElementById('subjects-display-modal').close();
+              }} 
+              className="btn btn-primary px-8 font-bold text-lg">
+              Done
+            </button>
+          </>
+        )}
+        buttonDirection='center'
+      />
+      <DialogSmall
+        id='create-exam-group-modal'
+        title="Create New Subject Group"
+        content={()=>(
+            <input
+            type="text"
+            className="input input-bordered w-full mt-6"
+            value={groupName}
+            onChange={(e) => setGroupName(e.target.value)}
+            placeholder="Enter exam group name"
+          />
+        )}
+        buttons={() => (
+          <div className="flex gap-3">
+            <button
+              onClick={e=>{
+                e.preventDefault();
+                confirmSubjectGroup();
+              }} 
+              className="btn btn-primary px-8 font-bold text-lg">
+              Create
+            </button>
+
+            <button className="btn text-white font-semibold text-lg bg-red-500/90 hover:bg-red-500">
+              Cancel
+            </button>
           </div>
-          {/* Modal Close Button */}
-          <div className="modal-action">
-            <form method="dialog" className="w-full flex">
-              <button className="btn btn-primary mx-auto px-8 font-bold text-lg">
-                Done
-              </button>
-            </form>
+        )}
+        buttonDirection='right'
+      />
+      <DialogSmall
+        id='edit-exam-group-modal'
+        title="Edit Subject Group"
+        content={()=>(
+            <input
+            type="text"
+            className="input input-bordered w-full mt-6"
+            value={editGroupName}
+            onChange={(e) => setEditGroupName(e.target.value)}
+            placeholder="Enter exam group name"
+          />
+        )}
+        buttons={() => (
+          <div className="flex gap-3">
+            <button
+              onClick={e=>{
+                e.preventDefault();
+                confirmSubjectGroupEdit();
+              }} 
+              className="btn btn-primary px-8 font-bold text-lg">
+              Update
+            </button>
+
+            <button className="btn text-white font-semibold text-lg bg-red-500/90 hover:bg-red-500">
+              Cancel
+            </button>
           </div>
-        </div>
-      </dialog>
-      <dialog id="delete-exam-group-modal" className="modal">
-        <div className="modal-box w-1/2 max-w-5xl">
-          <h3 className="font-bold text-lg">Delete Subject Group</h3>
-          <p>
+        )}
+        buttonDirection='right'
+      />
+      <DialogSmall
+        id='delete-exam-group-modal'
+        title="Delete Subject Group"
+        content={()=>(
+          <p className="mt-5">
             Are you sure you want to delete "
             {selectedGroupIndex !== null && groups[selectedGroupIndex].name}"
             subject group?
           </p>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button, it will close the modal */}
-              <button
-                className="btn btn-primary font-bold mr-5"
-                onClick={confirmSubjectGroupDelete}
-              >
-                Delete
-              </button>
-              <button className="btn bg-red-400 hover:bg-red-500 font-bold">
-                Cancel
-              </button>
-            </form>
+        )}
+        buttons={() => (
+          <div className="flex gap-3">
+            <button
+              onClick={e=>{
+                e.preventDefault();
+                confirmSubjectGroupDelete();
+              }} 
+              className="btn btn-primary px-8 font-bold text-lg">
+              Delete
+            </button>
           </div>
-        </div>
-      </dialog>
-      <DislogInput
-        id="create-exam-group-modal"
-        title="Create New Subject Group"
-        inputValue={groupName}
-        setInputValue={setGroupName}
-        button1Text="Create"
-        button1Function={confirmSubjectGroup}
-      />
-      <DislogInput
-        id="edit-exam-group-modal"
-        title="Edit Subject Group"
-        inputValue={editGroupName}
-        setInputValue={setEditGroupName}
-        button1Text="Update"
-        button1Function={confirmSubjectGroupEdit}
+        )}
+        buttonDirection='right'
+        crossButtonDisplay='true'
       />
     </>
   );
+};
+
+const Page1 = ({
+  currentStage,
+  examName,
+  setExamName,
+  groups,
+  setSelectedGroupIndex,
+  setEditGroupName,
+}) => {
+  
+
+  // handle exam group creation
+  const createGroup = (e) => {
+    e.preventDefault();
+    document.getElementById("create-exam-group-modal").showModal();
+  };
+
+  // handle Subject Group name Edit
+  const handleSubjectGroupEdit = (e, index) => {
+    e.preventDefault();
+    setEditGroupName(groups[index].name);
+    document.getElementById("edit-exam-group-modal").showModal();
+    setSelectedGroupIndex(index);
+  };
+
+  // handle add subject button
+  const addSubjectModalHandle = (e, index) => {
+    e.preventDefault();
+    document.getElementById("subjects-display-modal").showModal();
+    setSelectedGroupIndex(index);
+  };
+
+  const handleGroupDelete = (e, index) => {
+    e.preventDefault();
+    setSelectedGroupIndex(index);
+    document.getElementById("delete-exam-group-modal").showModal();
+  };
+
+
+  
 
   return (
     <section className={currentStage === 0 ? "" : "hidden"}>
@@ -235,24 +309,24 @@ const Page1 = ({
                     </td>
                     <td>
                       <button
-                        className="btn btn-primary mr-3"
+                        className="btn btn-primary mr-3 rounded-xl"
                         onClick={(e) => addSubjectModalHandle(e, index)}
                       >
-                        <PlusIcon className="size-4" /> Subject
+                        <FaPlus  className="size-4" /> Subject
                       </button>
                       <button
-                        className="btn btn-accent mr-3"
+                        className="btn btn-accent mr-3 rounded-xl"
                         onClick={(e) => handleSubjectGroupEdit(e, index)}
                       >
-                        <Pencil className="size-4" /> Edit Name
+                        <Pencil className="size-4" />
                       </button>
                       <button
-                        className="btn btn-secondary"
+                        className="btn bg-red-500/80 hover:bg-red-500 rounded-xl"
                         onClick={(e) => {
                           handleGroupDelete(e, index);
                         }}
                       >
-                        <Trash className="size-4" /> Delete
+                        <Trash className="size-4" />
                       </button>
                     </td>
                   </tr>
@@ -268,4 +342,4 @@ const Page1 = ({
   );
 };
 
-export { Page1,Page1dialogs };
+export { Page1, Page1dialogs };

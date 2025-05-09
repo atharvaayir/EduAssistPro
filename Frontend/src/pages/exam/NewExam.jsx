@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { useExamStore } from "../../store/useExamStore";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { Page1,Page1dialogs } from "./page1";
+import { Page1, Page1dialogs } from "./page1";
 import Page2 from "./Page2";
-import Page3 from "./Page3";
+import {Page3,Page3Dailogs} from "./Page3";
 import PageNumberDisplay from "./PageNumberDisplay";
 import Page4 from "./Page4";
+import DialogBig from "./DialogBig";
 
 const NewExam = () => {
   const {
@@ -113,13 +114,11 @@ const NewExam = () => {
 
   const [examName,setExamName] = useState(null);
   const [timetable, setTimetable] = useState([]);
-
-
+  const [selectedGroupIndex, setSelectedGroupIndex] = useState(null);
+  const [editGroupName, setEditGroupName] = useState("");
 
   // Handle Next Step
   const handleNext = () => {
-    console.log(timetable);
-
     if (currentStage < steps.length - 1) {
       setStage(1,true);
     }
@@ -191,8 +190,8 @@ const NewExam = () => {
                 examName={examName}
                 setExamName={setExamName}
                 groups={groups}
-                setGroups={setGroups}
-                subjects={subjects}
+                setSelectedGroupIndex={setSelectedGroupIndex}
+                setEditGroupName={setEditGroupName}
               />
               <Page2
                 currentStage={currentStage}
@@ -204,12 +203,8 @@ const NewExam = () => {
               />
               <Page3
                 currentStage={currentStage}
-                classrooms={classrooms}
-                invigilators={invigilators}
                 selectedClassrooms={selectedClassrooms}
-                setSelectedClassrooms={setSelectedClassrooms}
                 selectedInvigilators={selectedInvigilators}
-                setSelectedInvigilators={setSelectedInvigilators}
               />
               <Page4
                 currentStage={currentStage}
@@ -235,7 +230,27 @@ const NewExam = () => {
           )}
           {/* Modal Popup for Classrooms */}
           <section>
-          <Page1dialogs />
+            {Page1dialogs && (
+              <Page1dialogs
+                selectedGroupIndex={selectedGroupIndex}
+                setSelectedGroupIndex={setSelectedGroupIndex}
+                editGroupName={editGroupName}
+                setEditGroupName={setEditGroupName}
+                groups={groups}
+                setGroups={setGroups}
+                subjects={subjects}
+              />
+            )}
+            {Page3Dailogs && (
+              <Page3Dailogs
+                classrooms={classrooms}
+                invigilators={invigilators}
+                selectedClassrooms={selectedClassrooms}
+                selectedInvigilators={selectedInvigilators}
+                setSelectedClassrooms={setSelectedClassrooms}
+                setSelectedInvigilators={setSelectedInvigilators}
+              />
+            )}
           </section>
         </div>
       ) : (

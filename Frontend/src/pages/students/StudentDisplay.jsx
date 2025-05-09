@@ -77,16 +77,9 @@ const StudentDisplay = () => {
   return (
     <div>
         <section className='flex items-end justify-center gap-4 mb-6'>
-            <fieldset className="fieldset relative">
-                <legend className="fieldset-legend font-semibold">Semester</legend>
-                <input type="number" ref={semesterRef} className={`input shadow-lg w-56 ${warningVisible ? 'border-red-500' : ''}`} required placeholder="Number between 1 to 8" min="1" max="8" title="Must be between be 1 to 10" onChange={handleSemesterChange} />
-                <p className={`text-red-500 absolute text-nowrap  ${warningVisible ? 'block' : 'hidden'}`}>
-                    Must be between be 1 to 8
-                </p>
-            </fieldset>
             <fieldset className="fieldset">
                 <legend className="fieldset-legend font-semibold">Department</legend>
-                <select defaultValue="Pick a browser" className="select shadow-lg" ref={departmentRef}>
+                <select defaultValue="Pick a browser" className="select shadow-lg pr-10" ref={departmentRef}>
                     <option disabled={true}>Pick a browser</option>
                     <option value="civ">CIV</option>
                     <option value="comp">COMP</option>
@@ -96,6 +89,13 @@ const StudentDisplay = () => {
                     <option value="etc">ETC</option>
                     <option value="vlsi">VLSI </option>
                 </select>
+            </fieldset>
+            <fieldset className="fieldset relative">
+                <legend className="fieldset-legend font-semibold">Semester</legend>
+                <input type="number" ref={semesterRef} className={`input shadow-lg w-56 ${warningVisible ? 'border-red-500' : ''}`} required placeholder="Number between 1 to 8" min="1" max="8" title="Must be between be 1 to 10" onChange={handleSemesterChange} />
+                <p className={`text-red-500 absolute text-nowrap  ${warningVisible ? 'block' : 'hidden'}`}>
+                    Must be between be 1 to 8
+                </p>
             </fieldset>
             <button type="button" className='btn btn-primary' onClick={fetchStudentsWithToast}><FaSearch className='size-5' /> </button>
         </section>

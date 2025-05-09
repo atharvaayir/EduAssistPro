@@ -26,8 +26,7 @@ const Page4 = ({
     "bg-lime-200",
   ];
   const [shuffleIsChecked, setShuffleIsChecked] = useState(false);
-  const [seatingArrangementDisplay, setSeatingArrangementDisplay] =
-    useState(false);
+  const [seatingArrangementDisplay, setSeatingArrangementDisplay] = useState(false);
   const handleChoiceClick = (choice) => {
     setSeatingArrangementSelectedChoice(choice);
   };
@@ -64,7 +63,7 @@ const Page4 = ({
     <>
       <section className={currentStage === 3 ? "" : "hidden"}>
         {/* arrangement input */}
-        {seatingArrangementDisplay ? (
+        {!seatingArrangementDisplay ? (
           <div className="grid grid-cols-2 gap-4">
             <FormInputBox>
               <h1 className="text-2xl font-bold mb-4">Arrangement Type</h1>
@@ -285,10 +284,9 @@ const Page4 = ({
         </div>
       </section>
       <section>
-        <dialog id="seating-arrangement-preview-modal" className="modal">
+        {/* <dialog id="seating-arrangement-preview-modal" className="modal">
           <div className="modal-box w-11/12 max-w-6xl">
             <h3 className="font-bold text-xl mb-4">Seating Arrangement</h3>
-            {/* Classroom Buttons Grid (Scrollable) */}
             <div className="p-4  max-h-[20rem] overflow-y-auto">
               {!seatingArrangementData ||
               seatingArrangementData.length === 0 ? (
@@ -371,7 +369,6 @@ const Page4 = ({
                 </div>
               )}
             </div>
-            {/* Modal Close Button */}
             <div className="modal-action">
               <form method="dialog" className="w-full flex">
                 <button className="btn btn-primary mx-auto px-8 font-bold text-lg">
@@ -380,7 +377,7 @@ const Page4 = ({
               </form>
             </div>
           </div>
-        </dialog>
+        </dialog> */}
       </section>
     </>
   );
