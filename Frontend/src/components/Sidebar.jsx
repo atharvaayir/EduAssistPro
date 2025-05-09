@@ -14,43 +14,51 @@ function Sidebar() {
   };
 
   return (
-    <div className={`relative bg-blue-50 border border-blue-300 rounded-tr-xl h-full max-h-full ${collapsed ? 'w-[60px]' : 'w-[250px]'} transition-all duration-300`}>
-      {/* Toggle Button */}
-      <div onClick={toggleSidebar} className="flex p-2 absolute bottom-2 cursor-pointer left-2 hover:bg-blue-300 rounded-lg transition-colors duration-100">
-        <button onClick={toggleSidebar}>
-          {collapsed ? <SidebarOpen /> : <SidebarClose/>}
-        </button>
-      </div>
-      <div className="flex flex-col items-center">
-        {/* Navigation Buttons */}
-        <div className="w-full pt-4">
-          <Link to="/" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <FaHome className="mr-2" /> {!collapsed && ("Home")}
-          </Link>
-          <Link to="/new-exam" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <FaPlus className="mr-2" /> {!collapsed && ("New Exam")}
-          </Link>
-          <Link to="/classrooms" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <FaCube className="mr-2" /> {!collapsed && ("Classrooms")}
-          </Link>
-          <Link to="/seating-arrangement  " className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <FaChalkboard className="mr-2" /> {!collapsed && ("Seating Arrangement")}
-          </Link>
-          <Link to="/subjects" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <PiBooks className="mr-2 size-5" /> {!collapsed && ("Subjects")}
-          </Link>
-          <Link to="/student" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <IoPeople className="mr-2 size-5" /> {!collapsed && ("Students")}
-          </Link>
-          <Link to="/reports" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <FaChartBar className="mr-2" /> {!collapsed && ("Reports")}
-          </Link>
-          <Link to="/profile" className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center">
-            <FaUser className="mr-2" /> {!collapsed && ("Profile")}
-          </Link>
-        </div>
-      </div>
+<div
+  className={`relative bg-blue-50 border border-blue-300 rounded-tr-xl h-full max-h-full 
+    transition-[width] duration-300 ease-in-out overflow-hidden
+    ${collapsed ? 'w-[60px]' : 'w-[250px]'}`}
+>
+  {/* Toggle Button */}
+  <div
+    onClick={toggleSidebar}
+    className="flex p-2 absolute bottom-2 cursor-pointer left-2 hover:bg-blue-300 rounded-lg transition-colors duration-100"
+  >
+    <button onClick={toggleSidebar}>
+      {collapsed ? <SidebarOpen /> : <SidebarClose />}
+    </button>
+  </div>
+
+  <div className="flex flex-col items-center">
+    <div className="w-full pt-4">
+      {[
+        { to: "/", icon: <FaHome />, label: "Home" },
+        { to: "/new-exam", icon: <FaPlus />, label: "New Exam" },
+        { to: "/classrooms", icon: <FaCube />, label: "Classrooms" },
+        { to: "/seating-arrangement", icon: <FaChalkboard />, label: "Seating Arrangement" },
+        { to: "/subjects", icon: <PiBooks className="size-5" />, label: "Subjects" },
+        { to: "/student", icon: <IoPeople className="size-5" />, label: "Students" },
+        { to: "/reports", icon: <FaChartBar />, label: "Reports" },
+        { to: "/profile", icon: <FaUser />, label: "Profile" }
+      ].map(({ to, icon, label }) => (
+        <Link
+          key={to}
+          to={to}
+          className="w-full text-left px-4 py-2 hover:bg-blue-300 flex items-center relative"
+        >
+          <span className="mr-2">{icon}</span>
+          <span
+            className={`transition-all duration-300 origin-left whitespace-nowrap
+              ${collapsed ? 'scale-x-0' : ' scale-x-100 ml-1'}`}
+          >
+            {label}
+          </span>
+        </Link>
+      ))}
     </div>
+  </div>
+</div>
+
   );
 }
 
